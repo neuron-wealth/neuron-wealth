@@ -1,0 +1,30 @@
+# Dependencies
+**/node_modules/
+
+# Production build outputs
+**/dist/
+**/build/
+
+# Local Environment Variables & Secrets
+**/.env
+**/.env.*
+!**/.env.example
+
+# Editor history and cache
+.history/
+.lh/
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs & temp
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

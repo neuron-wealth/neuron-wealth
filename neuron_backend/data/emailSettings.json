@@ -1,0 +1,23 @@
+{
+  "recipients": "",
+  "events": {
+    "submission": {
+      "enabled": true,
+      "subject": "New {{formName}} from {{name}}",
+      "body": "A new {{formName}} was submitted on the website on {{date}}.\n\n{{details}}\n\nOpen the admin console to review it and update its status.",
+      "buttonLabel": "View in Admin"
+    },
+    "comment": {
+      "enabled": true,
+      "subject": "New comment on \"{{postTitle}}\"",
+      "body": "{{name}} ({{email}}) commented on \"{{postTitle}}\" on {{date}}:\n\n{{comment}}\n\nThe comment is waiting for approval. Approve it or reply from the admin console.",
+      "buttonLabel": "Review Comment"
+    },
+    "reply": {
+      "enabled": true,
+      "subject": "{{replyBy}} replied to your comment on \"{{postTitle}}\"",
+      "body": "Hello {{name}},\n\nThank you for your comment on \"{{postTitle}}\". {{replyBy}} from Neuron Wealth Advisors has replied:\n\n{{reply}}\n\nYour comment:\n\n{{comment}}\n\nYou can read the full conversation on our website.",
+      "buttonLabel": "View the Conversation"
+    }
+  }
+}
