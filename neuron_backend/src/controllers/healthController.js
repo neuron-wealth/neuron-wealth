@@ -1,13 +1,7 @@
-const { hasDB } = require("../config/db");
-const { isMailConfigured } = require("../services/mailService");
 
+// Public uptime check: says only whether the API is up. Database and email status are not exposed.
 function health(_req, res) {
-  res.json({
-    ok: true,
-    db: hasDB() ? "connected" : "offline_fallback",
-    mail: isMailConfigured() ? "configured" : "not_configured",
-    timestamp: new Date().toISOString(),
-  });
+  res.json({ ok: true, timestamp: new Date().toISOString() });
 }
 
 module.exports = { health };

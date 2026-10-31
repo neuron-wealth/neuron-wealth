@@ -68,6 +68,8 @@ export default function Callback({ id, content, design, root }) {
     const phoneDigits = form.phone.replace(/\D/g, "");
     if (!form.name.trim() || phoneDigits.length < 7) {
       setError("Enter your name and a phone number.");
+      const first = !form.name.trim() ? "name" : "phone";
+      requestAnimationFrame(() => document.getElementById(`${id}-${first}`)?.focus());
       return;
     }
     const service = services.includes(form.service) ? form.service : services[0] || "";
@@ -159,6 +161,8 @@ export default function Callback({ id, content, design, root }) {
                   placeholder={content.namePlaceholder || "Your Name"}
                   value={form.name}
                   onChange={(event) => setForm({ ...form, name: event.target.value })}
+                  aria-invalid={Boolean(error) && !form.name.trim()}
+                  aria-describedby={error ? `${id}-error` : undefined}
                   className={FIELD}
                 />
               </div>
@@ -174,6 +178,8 @@ export default function Callback({ id, content, design, root }) {
                   placeholder={content.phonePlaceholder || "Phone Number"}
                   value={form.phone}
                   onChange={(event) => setForm({ ...form, phone: event.target.value })}
+                  aria-invalid={Boolean(error) && form.phone.replace(/\D/g, "").length < 7}
+                  aria-describedby={error ? `${id}-error` : undefined}
                   className={FIELD}
                 />
               </div>
@@ -209,7 +215,7 @@ export default function Callback({ id, content, design, root }) {
               </button>
             </div>
             {error ? (
-              <p role="alert" className="mt-3 text-sm text-[#F6D0D0]">
+              <p id={`${id}-error`} role="alert" className="mt-3 text-sm text-[#F6D0D0]">
                 {error}
               </p>
             ) : null}

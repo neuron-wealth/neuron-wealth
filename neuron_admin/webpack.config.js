@@ -56,7 +56,8 @@ module.exports = (_env, argv) => {
         },
       ],
     },
-    devtool: isProd ? "source-map" : "eval-cheap-module-source-map",
+    // No source maps in production builds: they would publish the full original source code.
+    devtool: isProd ? false : "eval-cheap-module-source-map",
     performance: { hints: false },
   };
 };

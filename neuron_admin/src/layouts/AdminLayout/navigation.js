@@ -1,4 +1,4 @@
-import { FilePlus2, LayoutDashboard, LayoutTemplate, MessageSquareText, Newspaper } from "lucide-react";
+import { FilePlus2, FolderOpen, LayoutDashboard, LayoutTemplate, MessageSquareText, Newspaper } from "lucide-react";
 import { RECORD_PAGES } from "../../config/records";
 
 const FORMS_GROUP = "Form Submissions";
@@ -14,7 +14,10 @@ export const NAV_GROUPS = [
   },
   {
     label: "Website",
-    items: [{ to: "/website/cms", label: "Website CMS", icon: LayoutTemplate, matchPrefix: "/website/" }],
+    items: [
+      { to: "/website/cms", label: "Website CMS", icon: LayoutTemplate, matchPrefix: "/website/" },
+      { to: "/media", label: "Media Library", icon: FolderOpen, end: true },
+    ],
   },
   {
     label: "Blog Management",
@@ -72,6 +75,7 @@ export const PAGE_TITLES = {
   "/blogs": { title: "All Blogs", ...BLOG },
   "/blogs/new": { title: "Add New Blog", ...BLOG },
   "/blogs/comments": { title: "Comments", ...BLOG },
+  "/media": { title: "Media Library", group: "Website" },
   "/profile": { title: "My Profile", group: "Account" },
   "/settings": { title: "Settings", group: "Account" },
 };

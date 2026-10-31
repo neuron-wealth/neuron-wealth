@@ -51,6 +51,8 @@ export default function Hero({ id, content, root }) {
           alt={image.alt || ""}
           width="1600"
           height="900"
+          fetchPriority="high"
+          decoding="async"
           className="absolute -inset-[3%] h-[106%] w-[106%] max-w-none object-cover object-[67%_center]"
         />
       ) : null}
@@ -171,25 +173,25 @@ export default function Hero({ id, content, root }) {
 
         {stats.length ? (
           <Reveal delay={0.2} className="mt-8 w-full max-w-[46rem] sm:mt-10 lg:mt-12 xl:max-w-[48rem]">
-            <dl className="grid grid-cols-2 divide-y divide-white/10 overflow-hidden rounded-2xl border border-white/15 bg-[#0A2E49]/90 shadow-[0_24px_60px_-32px_rgba(0,0,0,0.65)] backdrop-blur-md sm:grid-cols-4 sm:divide-x sm:divide-y-0 lg:bg-[#050E17]/90">
+            <ul className="grid grid-cols-2 divide-y divide-white/10 overflow-hidden rounded-2xl border border-white/15 bg-[#0A2E49]/90 shadow-[0_24px_60px_-32px_rgba(0,0,0,0.65)] backdrop-blur-md sm:grid-cols-4 sm:divide-x sm:divide-y-0 lg:bg-[#050E17]/90">
               {stats.map((item) => (
-                <div key={item.id} className="flex flex-col justify-between p-3.5 sm:p-4">
+                <li key={item.id} className="flex flex-col justify-between p-3.5 sm:p-4">
                   <div className="flex items-center gap-2.5">
                     {item.icon ? (
                       <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-[#54B848]/30 bg-[#54B848]/15 text-[#54B848]">
                         <CmsIcon name={item.icon} className="h-4.5 w-4.5 text-[#54B848]" />
                       </span>
                     ) : null}
-                    <dt className="whitespace-nowrap font-manrope text-[1.4rem] font-bold leading-none tracking-tight text-white sm:text-[1.6rem]">
+                    <p className="whitespace-nowrap font-manrope text-[1.4rem] font-bold leading-none tracking-tight text-white sm:text-[1.6rem]">
                       <CountUp value={item.value} />
-                    </dt>
+                    </p>
                   </div>
-                  <dd className="mt-2 text-[0.6875rem] font-medium leading-snug text-[#B7CCD8] sm:text-xs">
+                  <p className="mt-2 text-[0.6875rem] font-medium leading-snug text-[#B7CCD8] sm:text-xs">
                     {item.leadWord ? <strong className="font-semibold text-white">{item.leadWord}</strong> : null} {item.label}
-                  </dd>
-                </div>
+                  </p>
+                </li>
               ))}
-            </dl>
+            </ul>
           </Reveal>
         ) : null}
       </div>

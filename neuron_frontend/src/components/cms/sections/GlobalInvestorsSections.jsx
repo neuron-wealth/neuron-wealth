@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useReducedMotion } from "../../../hooks/useReducedMotion";
 import { ArrowRight, Check, CircleHelp, FileText, Globe, MapPin, Quote, Search } from "lucide-react";
 import { cx } from "../../../utils/cx";
 import { CmsLink, FOCUS, hasLink, strings, visibleItems } from "../primitives";
@@ -124,7 +125,7 @@ export function InvestorHero({ content: c, root }) {
         >
           <div className="lg:col-span-7">
             {c.eyebrow ? (
-              <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-[#8FCB86] sm:text-[13px]">{c.eyebrow}</p>
+              <p className="text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-[#8FCB86] sm:text-[0.8125rem]">{c.eyebrow}</p>
             ) : null}
             <h1 className="mt-4 font-display text-[2.25rem] font-medium leading-tight tracking-tight text-white sm:text-[3.1rem] lg:text-[3.6rem]">
               {c.title}
@@ -135,7 +136,7 @@ export function InvestorHero({ content: c, root }) {
                 </>
               ) : null}
             </h1>
-            <div className="mt-6 max-w-2xl space-y-4 text-[15px] leading-relaxed text-white/90 sm:text-[16px] lg:text-[17px]">
+            <div className="mt-6 max-w-2xl space-y-4 text-[0.9375rem] leading-relaxed text-white/90 sm:text-[1rem] lg:text-[1.0625rem]">
               {textBlocks(c.paragraphs).map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
@@ -165,7 +166,7 @@ export function InvestorHero({ content: c, root }) {
                 </div>
                 <ul className="relative mt-7 divide-y divide-white/10 border-t border-white/10">
                   {trust.map((item) => (
-                    <li key={item} className="flex items-center gap-3 py-3.5 text-[14px] font-medium text-white sm:text-[15px]">
+                    <li key={item} className="flex items-center gap-3 py-3.5 text-[0.875rem] font-medium text-white sm:text-[0.9375rem]">
                       <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#54B848] text-[#102A40]">
                         <Check className="h-3.5 w-3.5" aria-hidden="true" />
                       </span>
@@ -198,7 +199,7 @@ export function InvestorReasons({ content: c, root }) {
             <h2 id="reasons-heading" className={`${H2_SIZE} text-white`}>
               {c.heading}
             </h2>
-            {c.text ? <p className="mt-4 text-base leading-[1.8] text-white/85 sm:text-[17px]">{c.text}</p> : null}
+            {c.text ? <p className="mt-4 text-base leading-[1.8] text-white/85 sm:text-[1.0625rem]">{c.text}</p> : null}
           </div>
 
           {reasons.map((item, idx) => {
@@ -234,7 +235,7 @@ export function InvestorReasons({ content: c, root }) {
                 </h3>
                 <p
                   className={cx(
-                    "mt-3 text-[15px] leading-relaxed sm:text-base",
+                    "mt-3 text-[0.9375rem] leading-relaxed sm:text-base",
                     isLast ? "text-white/80 lg:mt-0" : "text-[#5E6D7B] dark:text-slate-300",
                   )}
                 >
@@ -319,6 +320,110 @@ export function InvestorFamiliar({ content: c, root }) {
   );
 }
 
+function RulesShowcase({ rules }) {
+  const [active, setActive] = useState(0);
+  const itemRefs = useRef([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(Number(entry.target.dataset.index));
+        });
+      },
+      { rootMargin: "-45% 0px -45% 0px" },
+    );
+    itemRefs.current.forEach((el) => el && observer.observe(el));
+    return () => observer.disconnect();
+  }, [rules.length]);
+
+  const current = rules[Math.min(active, rules.length - 1)];
+  if (!current) return null;
+
+  return (
+    <div className="mt-12 grid gap-10 lg:grid-cols-12 lg:gap-14">
+      <ol className="lg:col-span-6">
+        {rules.map((item, idx) => {
+          const isActive = idx === active;
+          return (
+            <li
+              key={item.id || item.title}
+              ref={(el) => {
+                itemRefs.current[idx] = el;
+              }}
+              data-index={idx}
+              onMouseEnter={() => setActive(idx)}
+              className={cx(
+                "border-b border-white/10 py-7 transition-opacity duration-300 first:pt-0 last:border-b-0",
+                isActive ? "lg:opacity-100" : "lg:opacity-45",
+              )}
+            >
+              {imgSrc(item.image) ? (
+                <div className="relative mb-5 h-44 overflow-hidden lg:hidden">
+                  <img {...imgProps(item.image)} loading="lazy" className="h-full w-full object-cover" />
+                  <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-[#071321]/70 to-transparent" />
+                </div>
+              ) : null}
+              <div className="flex gap-5">
+                <span
+                  className={cx(
+                    "grid h-11 w-11 shrink-0 place-items-center transition-colors duration-300",
+                    isActive ? "bg-[#54B848] text-[#102A40]" : "bg-white/[0.08] text-[#8FCB86]",
+                  )}
+                >
+                  <Ico name={item.icon} className="h-5 w-5" />
+                </span>
+                <div>
+                  <h3 className="flex items-baseline gap-3 font-display text-[1.3rem] font-medium leading-snug">
+                    <span className="text-[0.95rem] text-white/40">{pad2(idx + 1)}</span>
+                    {item.title}
+                  </h3>
+                  <p className="mt-3 text-[0.9375rem] leading-relaxed text-slate-300">{item.text}</p>
+                </div>
+              </div>
+            </li>
+          );
+        })}
+      </ol>
+
+      <div aria-hidden="true" className="hidden lg:col-span-6 lg:block">
+        <div className="sticky top-32 h-[min(36rem,calc(100vh-10rem))] overflow-hidden">
+          {rules.map((item, idx) =>
+            imgSrc(item.image) ? (
+              <img
+                key={item.id || item.title}
+                src={imgSrc(item.image)}
+                alt=""
+                loading="lazy"
+                className={cx(
+                  "absolute inset-0 h-full w-full object-cover transition-all duration-700 ease-out",
+                  idx === active ? "scale-100 opacity-100" : "scale-105 opacity-0",
+                )}
+              />
+            ) : null,
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#071321] via-[#071321]/40 to-transparent" />
+          <div className="absolute inset-x-8 top-8 flex gap-1.5">
+            {rules.map((item, idx) => (
+              <span
+                key={item.id || item.title}
+                className={cx("h-1 flex-1 transition-colors duration-500", idx <= active ? "bg-[#54B848]" : "bg-white/25")}
+              />
+            ))}
+          </div>
+          <div className="absolute inset-x-0 bottom-0 p-8">
+            <p className="font-display leading-none text-[#8FCB86]">
+              <span className="text-[4.5rem]">{pad2(active + 1)}</span>
+              <span className="ml-2 text-2xl text-white/40">/ {pad2(rules.length)}</span>
+            </p>
+            <p className="mt-3 font-display text-[1.7rem] leading-snug text-white">{current.title}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function InvestorRules({ content: c, root }) {
   return (
     <section
@@ -333,7 +438,7 @@ export function InvestorRules({ content: c, root }) {
           <h2 id="rules-heading" className={`${H2_SIZE} text-white lg:col-span-7`}>
             {c.heading}
           </h2>
-          {c.text ? <p className="text-base leading-[1.8] text-white/75 sm:text-[17px] lg:col-span-5">{c.text}</p> : null}
+          {c.text ? <p className="text-base leading-[1.8] text-white/75 sm:text-[1.0625rem] lg:col-span-5">{c.text}</p> : null}
         </div>
 
         <RulesShowcase rules={visibleItems(c.rules)} />
@@ -366,7 +471,7 @@ export function InvestorKeep({ content: c, root }) {
             {c.outro ? <p className={cx(BODY, "mt-6")}>{c.outro}</p> : null}
             {c.focusText ? (
               <div className="mt-8 border-l-4 border-[#54B848] bg-[#F7F8F5] p-6 dark:bg-white/[0.05]">
-                <p className="text-base leading-[1.8] text-[#15344F] dark:text-white sm:text-[17px]">
+                <p className="text-base leading-[1.8] text-[#15344F] dark:text-white sm:text-[1.0625rem]">
                   {c.focusLabel ? <strong className="font-semibold">{c.focusLabel}</strong> : null} {c.focusText}
                 </p>
               </div>
@@ -382,7 +487,7 @@ export function InvestorKeep({ content: c, root }) {
                 className="mx-auto flex min-w-[85%] items-center gap-4 bg-gradient-to-r from-[#15344F] to-[#21649A] px-6 py-4 text-white shadow-sm lg:min-w-0"
               >
                 <span className="font-display text-[1.4rem] leading-none text-[#8FCB86]">{idx + 1}</span>
-                <span className="text-[15px] leading-snug sm:text-base">{choice}</span>
+                <span className="text-[0.9375rem] leading-snug sm:text-base">{choice}</span>
               </motion.li>
             ))}
           </ol>
@@ -429,10 +534,10 @@ export function InvestorRoutes({ content: c, root }) {
               <div>
                 <div className="px-8 pb-6">
                   <h3 className="font-display text-[1.5rem] font-medium leading-snug">{route.title}</h3>
-                  <p className="mt-3 text-[15px] leading-relaxed text-white/85 sm:text-base">{route.text}</p>
+                  <p className="mt-3 text-[0.9375rem] leading-relaxed text-white/85 sm:text-base">{route.text}</p>
                 </div>
                 {route.suits ? (
-                  <p className="border-t border-white/15 bg-white/[0.08] px-8 py-5 text-[15px] leading-relaxed text-white/90 backdrop-blur-sm">
+                  <p className="border-t border-white/15 bg-white/[0.08] px-8 py-5 text-[0.9375rem] leading-relaxed text-white/90 backdrop-blur-sm">
                     {c.suitsLabel ? <strong className="font-semibold text-[#8FCB86]">{c.suitsLabel}</strong> : null} {route.suits}
                   </p>
                 ) : null}
@@ -464,7 +569,7 @@ export function InvestorIbkr({ content: c, root }) {
             <h2 id="ibkr-heading" className={`${H2_SIZE} text-white`}>
               {c.heading}
             </h2>
-            {c.text ? <p className="mt-6 text-base leading-[1.8] text-white/80 sm:text-[17px]">{c.text}</p> : null}
+            {c.text ? <p className="mt-6 text-base leading-[1.8] text-white/80 sm:text-[1.0625rem]">{c.text}</p> : null}
           </div>
           {c.statement ? (
             <p className="mt-10 border-t border-white/15 pt-6 font-display text-[1.25rem] leading-snug text-[#8FCB86] sm:text-[1.35rem]">
@@ -508,13 +613,13 @@ export function InvestorGift({ content: c, root }) {
           ) : null}
           <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-[#071321] via-[#071321]/75 to-[#071321]/10" />
           {c.badge ? (
-            <span className="absolute left-8 top-8 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-[13px] font-semibold text-[#15344F] shadow-md sm:left-10 sm:top-10">
+            <span className="absolute left-8 top-8 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-[0.8125rem] font-semibold text-[#15344F] shadow-md sm:left-10 sm:top-10">
               <MapPin className="h-4 w-4 text-[#54B848]" aria-hidden="true" />
               {c.badge}
             </span>
           ) : null}
           {c.panelTitle ? <h3 className="font-display text-[1.6rem] font-medium leading-snug">{c.panelTitle}</h3> : null}
-          {c.panelText ? <p className="mt-3 text-[15px] leading-[1.8] text-white/85 sm:text-base">{c.panelText}</p> : null}
+          {c.panelText ? <p className="mt-3 text-[0.9375rem] leading-[1.8] text-white/85 sm:text-base">{c.panelText}</p> : null}
         </motion.div>
 
         <div className="lg:col-span-7">
@@ -530,7 +635,7 @@ export function InvestorGift({ content: c, root }) {
             {strings(c.points).map((point, idx) => (
               <motion.li key={point} {...reveal(idx)} className="flex gap-4 border-t border-[#15344F]/15 py-5 dark:border-white/15">
                 <span className="font-display text-[1.8rem] leading-none text-[#54B848]">{pad2(idx + 1)}</span>
-                <span className="text-[15px] leading-relaxed text-[#18324A] dark:text-slate-200 sm:text-base">{point}</span>
+                <span className="text-[0.9375rem] leading-relaxed text-[#18324A] dark:text-slate-200 sm:text-base">{point}</span>
               </motion.li>
             ))}
           </ol>
@@ -545,7 +650,7 @@ export function InvestorGift({ content: c, root }) {
               </span>
               <div>
                 <h3 className="font-display text-[1.3rem] font-medium text-[#15344F] dark:text-white">{c.checkTitle}</h3>
-                <p className="mt-2 text-[15px] leading-[1.8] text-[#5E6D7B] dark:text-slate-300 sm:text-base">{c.checkText}</p>
+                <p className="mt-2 text-[0.9375rem] leading-[1.8] text-[#5E6D7B] dark:text-slate-300 sm:text-base">{c.checkText}</p>
               </div>
             </motion.div>
           ) : null}
@@ -666,7 +771,7 @@ function GoalsAccordion({ goals }) {
                     <Ico name={goal.icon} className="h-6 w-6" strokeWidth={1.6} />
                   </span>
                   <h3 className="mt-5 font-display text-[1.75rem] font-medium leading-tight">{goal.title}</h3>
-                  <p className="mt-3 text-[15px] leading-relaxed text-white/85 sm:text-base">{goal.text}</p>
+                  <p className="mt-3 text-[0.9375rem] leading-relaxed text-white/85 sm:text-base">{goal.text}</p>
                 </div>
               </div>
 
@@ -705,7 +810,7 @@ function GoalsAccordion({ goals }) {
             </div>
             <div className="p-6">
               <h3 className="font-display text-[1.4rem] font-medium leading-snug text-[#15344F] dark:text-white">{goal.title}</h3>
-              <p className="mt-2 text-[15px] leading-relaxed text-[#5E6D7B] dark:text-slate-300">{goal.text}</p>
+              <p className="mt-2 text-[0.9375rem] leading-relaxed text-[#5E6D7B] dark:text-slate-300">{goal.text}</p>
             </div>
           </motion.li>
         ))}
@@ -774,7 +879,7 @@ function HelpCard({ item, index }) {
           <span className="font-display text-[1.6rem] leading-none text-white/30">{pad2(index + 1)}</span>
         </div>
         <h3 className="mt-6 font-display text-[1.35rem] font-medium leading-snug">{item.title}</h3>
-        <p className="mt-3 text-[15px] leading-relaxed text-slate-200">{item.text}</p>
+        <p className="mt-3 text-[0.9375rem] leading-relaxed text-slate-200">{item.text}</p>
       </article>
     </li>
   );
@@ -922,7 +1027,7 @@ export function InvestorPlan({ content: c, root }) {
                     <li
                       key={item.id || item.title}
                       className={cx(
-                        "flex items-center gap-3 rounded-lg px-2 py-1.5 text-[14px] transition-colors duration-300",
+                        "flex items-center gap-3 rounded-lg px-2 py-1.5 text-[0.875rem] transition-colors duration-300",
                         current && "bg-[#54B848]/15 font-semibold text-[#15344F] dark:text-white",
                         !current && done && "text-[#15344F] dark:text-white",
                         !current && !done && "text-[#5E6D7B]/70 dark:text-slate-500",
@@ -981,7 +1086,7 @@ export function InvestorPlan({ content: c, root }) {
                 <h3 className="mt-5 font-display text-[1.45rem] font-medium leading-snug text-[#15344F] dark:text-white sm:text-[1.6rem]">
                   {item.title}
                 </h3>
-                <p className="mt-2 text-[15px] leading-relaxed text-[#5E6D7B] first-letter:uppercase dark:text-slate-300 sm:text-base">
+                <p className="mt-2 text-[0.9375rem] leading-relaxed text-[#5E6D7B] first-letter:uppercase dark:text-slate-300 sm:text-base">
                   {item.text}
                 </p>
               </li>
@@ -1081,7 +1186,7 @@ export function InvestorWhyChoose({ content: c, root }) {
                     </h3>
                     <p
                       className={cx(
-                        "mt-3 text-[15px] leading-relaxed sm:text-base",
+                        "mt-3 text-[0.9375rem] leading-relaxed sm:text-base",
                         green ? "text-[#102A40]/85" : blue ? "text-white/85" : "text-slate-300",
                       )}
                     >
@@ -1119,7 +1224,7 @@ export function InvestorHowWeWork({ content: c, root }) {
               </span>
               <div className="flex-1 border-b border-[#DCE4E8] pb-8 pt-2 dark:border-white/10">
                 <h3 className="font-display text-[1.4rem] font-medium leading-snug text-[#15344F] dark:text-white">{step.title}</h3>
-                <p className="mt-2 text-[15px] leading-relaxed text-[#5E6D7B] dark:text-slate-300 sm:text-base">{step.text}</p>
+                <p className="mt-2 text-[0.9375rem] leading-relaxed text-[#5E6D7B] dark:text-slate-300 sm:text-base">{step.text}</p>
               </div>
             </motion.li>
           ))}
@@ -1166,7 +1271,7 @@ export function InvestorStories({ content: c, root }) {
           <h2 id="stories-heading" className={`${H2_SIZE} text-white`}>
             {c.heading}
           </h2>
-          {c.note ? <p className="mt-4 text-[14px] leading-relaxed text-white/70">{c.note}</p> : null}
+          {c.note ? <p className="mt-4 text-[0.875rem] leading-relaxed text-white/70">{c.note}</p> : null}
         </div>
 
         <div className="mt-14 grid gap-6 md:grid-cols-2 lg:gap-8">
@@ -1189,7 +1294,7 @@ export function InvestorStories({ content: c, root }) {
         </div>
 
         {c.disclaimer ? (
-          <p className="mx-auto mt-12 max-w-3xl text-center text-[14px] italic leading-relaxed text-white/70">{c.disclaimer}</p>
+          <p className="mx-auto mt-12 max-w-3xl text-center text-[0.875rem] italic leading-relaxed text-white/70">{c.disclaimer}</p>
         ) : null}
       </div>
     </section>
@@ -1229,7 +1334,7 @@ export function InvestorFaqsClosing({ content: c, root }) {
             {disclaimer.map((paragraph, idx) => (
               <p
                 key={paragraph}
-                className={cx(idx === 0 ? "text-[13px]" : "text-[12px]", "leading-relaxed text-[#5E6D7B] dark:text-slate-400")}
+                className={cx(idx === 0 ? "text-[0.8125rem]" : "text-[0.75rem]", "leading-relaxed text-[#5E6D7B] dark:text-slate-400")}
               >
                 {paragraph}
               </p>

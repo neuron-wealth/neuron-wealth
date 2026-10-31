@@ -185,6 +185,8 @@ export default function NriDeliverables({ content, section }) {
             onPointerDown={(event) => event.pointerType !== "mouse" && setDeliverablesHeld(true)}
             onPointerUp={(event) => event.pointerType !== "mouse" && setDeliverablesHeld(false)}
             onPointerCancel={() => setDeliverablesHeld(false)}
+            tabIndex={0}
+            aria-label="What you receive, scroll sideways"
             className="mt-10 flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 pt-1 lg:mt-0"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >

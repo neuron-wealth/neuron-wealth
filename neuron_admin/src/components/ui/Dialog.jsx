@@ -2,6 +2,8 @@ import { useEffect, useId, useRef } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 
+const openStack = [];
+
 export default function Dialog({ open, title, description, onClose, children, footer, size = "md" }) {
   const titleId = useId();
   const panelRef = useRef(null);
@@ -14,12 +16,15 @@ export default function Dialog({ open, title, description, onClose, children, fo
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     panelRef.current?.focus();
+    const token = {};
+    openStack.push(token);
     const onKey = (event) => {
-      if (event.key === "Escape") closeRef.current();
+      if (event.key === "Escape" && openStack[openStack.length - 1] === token) closeRef.current();
     };
     document.addEventListener("keydown", onKey);
     return () => {
       document.removeEventListener("keydown", onKey);
+      openStack.splice(openStack.indexOf(token), 1);
       document.body.style.overflow = previousOverflow;
       previousFocus?.focus?.();
     };

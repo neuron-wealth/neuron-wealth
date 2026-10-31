@@ -35,8 +35,8 @@ function DetailRow({ icon: Icon, label, value, copy }) {
         <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
       </span>
       <div className="min-w-0 flex-1">
-        <dt className="muted text-xs font-semibold uppercase tracking-wide">{label}</dt>
-        <dd className="mt-0.5 break-all text-sm font-bold">{value || "—"}</dd>
+        <p className="muted text-xs font-semibold uppercase tracking-wide">{label}</p>
+        <p className="mt-0.5 break-all text-sm font-bold">{value || "—"}</p>
       </div>
       {copy && value ? <CopyButton value={value} label={label.toLowerCase()} /> : null}
     </div>
@@ -103,11 +103,11 @@ export default function Profile() {
             </h2>
           </div>
           {admin ? (
-            <dl className="divide-y divide-line">
+            <div className="divide-y divide-line">
               <DetailRow icon={UserRound} label="Full Name" value={admin.name} />
               <DetailRow icon={AtSign} label="Username" value={admin.username} copy />
               <DetailRow icon={Mail} label="Email" value={admin.email} copy />
-            </dl>
+            </div>
           ) : (
             <div className="space-y-4 p-6">
               <Skeleton className="h-10 w-full" />

@@ -1,0 +1,10 @@
+# Neuron Wealth Advisors LLP
+User-agent: *
+Allow: /
+
+# Admin console, API and the CMS preview are not for search results.
+Disallow: /admin
+Disallow: /api/
+Disallow: /cms-preview
+
+Sitemap: https://neuronwealth.com/sitemap.xml

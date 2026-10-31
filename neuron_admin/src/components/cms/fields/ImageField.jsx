@@ -1,11 +1,12 @@
 import { useEffect, useId, useRef, useState } from "react";
-import { ImageOff, ImagePlus, Maximize2, Trash2, Upload } from "lucide-react";
+import { FolderOpen, ImageOff, ImagePlus, Maximize2, Trash2, Upload } from "lucide-react";
 import { Input, Select } from "../../site/controls";
 import { useToast } from "../../../context/ToastContext";
 import { uploadImage } from "../../../services/pageService";
 import { assetUrl } from "../../../config/site";
 import { emptyImage, isSafeHref } from "../../../utils/cms";
 import { useCmsMeta } from "../CmsMetaContext";
+import MediaPickerDialog from "../../media/MediaPickerDialog";
 
 const FIT_OPTIONS = [
   { value: "", label: "Section Default" },
@@ -55,6 +56,7 @@ export default function ImageField({ field, value, onChange }) {
   const [uploading, setUploading] = useState(false);
   const [natural, setNatural] = useState(null);
   const [broken, setBroken] = useState(false);
+  const [picking, setPicking] = useState(false);
   const image = { ...emptyImage(), ...(value || {}) };
   const rules = meta?.image;
   const limits = meta?.limits?.imageSize || { min: 16, max: 2400 };
@@ -122,6 +124,10 @@ export default function ImageField({ field, value, onChange }) {
               <button type="button" onClick={() => inputRef.current?.click()} disabled={uploading} className="btn btn-secondary focus-ring h-9 px-3 text-xs">
                 <Upload className="h-3.5 w-3.5" aria-hidden="true" />
                 {uploading ? "Uploading…" : image.url ? "Replace Image" : "Upload Image"}
+              </button>
+              <button type="button" onClick={() => setPicking(true)} className="btn btn-secondary focus-ring h-9 px-3 text-xs">
+                <FolderOpen className="h-3.5 w-3.5" aria-hidden="true" />
+                Choose from Library
               </button>
               {image.url ? (
                 <button
@@ -193,6 +199,12 @@ export default function ImageField({ field, value, onChange }) {
           {field.sizing && field.hint ? <p className="muted text-xs">{field.hint}</p> : null}
         </div>
       </div>
+      <MediaPickerDialog
+        open={picking}
+        accept="image"
+        onClose={() => setPicking(false)}
+        onPick={(file) => set({ url: file.url, alt: image.alt || file.name.replace(/.[a-z0-9]+$/i, "").replace(/[-_]+/g, " ") })}
+      />
     </fieldset>
   );
 }

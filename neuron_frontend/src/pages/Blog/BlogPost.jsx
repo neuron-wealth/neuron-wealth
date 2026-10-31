@@ -170,6 +170,13 @@ function useArticleOutline(contentRef, articleRef, contentKey) {
   useEffect(() => {
     const root = contentRef.current;
     if (!root) return undefined;
+    // Wide tables scroll sideways on small screens; make them reachable by keyboard.
+    root.querySelectorAll("table").forEach((table, index) => {
+      if (table.scrollWidth > table.clientWidth + 1 && window.getComputedStyle(table).overflowX !== "visible") {
+        table.tabIndex = 0;
+        if (!table.getAttribute("aria-label")) table.setAttribute("aria-label", `Table ${index + 1}, scroll sideways`);
+      }
+    });
     const used = new Set();
     const list = [...root.querySelectorAll("h2")]
       .map((el, index) => {

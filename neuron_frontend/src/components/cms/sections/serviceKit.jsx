@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "../../../hooks/useReducedMotion";
 import { ArrowRight, Plus } from "lucide-react";
 import { cx } from "../../../utils/cx";
 import { CMS_ICONS } from "../cmsIcons";
@@ -9,7 +9,7 @@ export { FOCUS };
 
 export const H2_SIZE = "font-display text-[2.5rem] font-medium leading-[1.05] tracking-tight sm:text-[3rem]";
 export const H2 = `${H2_SIZE} text-[#15344F] dark:text-white`;
-export const BODY = "text-base leading-[1.8] text-[#5E6D7B] dark:text-slate-300 sm:text-[17px]";
+export const BODY = "text-base leading-[1.8] text-[#5E6D7B] dark:text-slate-300 sm:text-[1.0625rem]";
 export const OUTLINE_LIGHT =
   "inline-flex min-h-12 items-center gap-2 rounded-full border border-white/40 px-6 text-sm font-semibold text-white transition-colors hover:border-white hover:bg-white/10";
 export const OUTLINE_ON_LIGHT =
@@ -108,7 +108,7 @@ export function FaqBlock({ anchor, heading, contactLink, faqs, panelPrefix }) {
             <CmsLink
               link={contactLink}
               className={cx(
-                "mt-6 inline-flex items-center gap-2 text-[15px] font-semibold text-[#21649A] hover:text-[#15344F] dark:text-[#8FCB86] dark:hover:text-white",
+                "mt-6 inline-flex items-center gap-2 text-[0.9375rem] font-semibold text-[#21649A] hover:text-[#15344F] dark:text-[#8FCB86] dark:hover:text-white",
                 FOCUS,
               )}
             >

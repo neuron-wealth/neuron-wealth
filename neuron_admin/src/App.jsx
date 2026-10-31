@@ -20,6 +20,7 @@ import PageEditor from "./pages/PageEditor/PageEditor";
 import Blogs from "./pages/Blogs/Blogs";
 import BlogEditor from "./pages/Blogs/BlogEditor";
 import BlogComments from "./pages/Blogs/BlogComments";
+import MediaLibrary from "./pages/MediaLibrary/MediaLibrary";
 
 export default function App() {
   return (
@@ -48,6 +49,7 @@ export default function App() {
             <Route path="website/branding" element={<Navigate to="/website/header" replace />} />
             <Route path="website/social" element={<Navigate to="/website/footer" replace />} />
             <Route path="website/accessibility" element={<AccessibilitySettings />} />
+            <Route path="media" element={<MediaLibrary />} />
             <Route path="blogs" element={<Blogs />} />
             <Route path="blogs/new" element={<BlogEditor />} />
             <Route path="blogs/comments" element={<BlogComments />} />

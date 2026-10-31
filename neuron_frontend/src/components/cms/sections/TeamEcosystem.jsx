@@ -125,7 +125,7 @@ export default function TeamEcosystem({ id, content, design, root }) {
                     {member.monogram}
                   </span>
                   <div className="min-w-0">
-                    <h4 className="font-display text-[1.3rem] font-medium leading-tight text-white">
+                    <h4 aria-level={3} className="font-display text-[1.3rem] font-medium leading-tight text-white">
                       {member.name}
                     </h4>
                     <p className="mt-1 text-[0.8125rem] font-medium text-[#8FCB86]">

@@ -554,7 +554,7 @@ export default function ComplianceHub({ id, content, design, root }) {
                       {auditTitle}
                     </h2>
 
-                    <div className="mt-6 overflow-x-auto rounded-xl border border-slate-200/80 bg-white shadow-2xs dark:border-white/10 dark:bg-[#071321]">
+                    <div tabIndex={0} role="region" aria-label="Table 1, scroll sideways on small screens" className="mt-6 overflow-x-auto rounded-xl border border-slate-200/80 bg-white shadow-2xs dark:border-white/10 dark:bg-[#071321]">
                       <table className="w-full min-w-[600px] border-collapse text-left text-xs sm:text-sm">
                         <thead>
                           <tr className="border-b border-slate-200 bg-[#F4F8FC] text-[#21649A] dark:border-white/10 dark:bg-white/5 dark:text-[#8FCB86]">
@@ -666,7 +666,7 @@ export default function ComplianceHub({ id, content, design, root }) {
                         {currentMonthTitle}
                       </h3>
 
-                      <div className="mt-4 overflow-x-auto rounded-xl border border-slate-200/80 bg-white shadow-2xs dark:border-white/10 dark:bg-[#071321]">
+                      <div tabIndex={0} role="region" aria-label="Table 2, scroll sideways on small screens" className="mt-4 overflow-x-auto rounded-xl border border-slate-200/80 bg-white shadow-2xs dark:border-white/10 dark:bg-[#071321]">
                         <table className="w-full min-w-[760px] border-collapse text-xs sm:text-[0.8125rem]">
                           <thead>
                             <tr className="border-b border-slate-200 bg-[#F4F8FC] text-[#21649A] dark:border-white/10 dark:bg-white/5 dark:text-[#8FCB86]">
@@ -716,7 +716,7 @@ export default function ComplianceHub({ id, content, design, root }) {
                         Trend of monthly disposal of complaints:
                       </h3>
 
-                      <div className="mt-4 overflow-x-auto rounded-xl border border-slate-200/80 bg-white shadow-2xs dark:border-white/10 dark:bg-[#071321]">
+                      <div tabIndex={0} role="region" aria-label="Table 3, scroll sideways on small screens" className="mt-4 overflow-x-auto rounded-xl border border-slate-200/80 bg-white shadow-2xs dark:border-white/10 dark:bg-[#071321]">
                         <table className="w-full min-w-[620px] border-collapse text-xs sm:text-[0.8125rem]">
                           <thead>
                             <tr className="border-b border-slate-200 bg-[#F4F8FC] text-[#21649A] dark:border-white/10 dark:bg-white/5 dark:text-[#8FCB86]">
@@ -757,7 +757,7 @@ export default function ComplianceHub({ id, content, design, root }) {
                         <span className="text-xs font-bold text-[#21649A] dark:text-[#8FCB86]">Grand Total:</span>
                       </div>
 
-                      <div className="mt-4 overflow-x-auto rounded-xl border border-slate-200/80 bg-white shadow-2xs dark:border-white/10 dark:bg-[#071321]">
+                      <div tabIndex={0} role="region" aria-label="Table 4, scroll sideways on small screens" className="mt-4 overflow-x-auto rounded-xl border border-slate-200/80 bg-white shadow-2xs dark:border-white/10 dark:bg-[#071321]">
                         <table className="w-full min-w-[620px] border-collapse text-xs sm:text-[0.8125rem]">
                           <thead>
                             <tr className="border-b border-slate-200 bg-[#F4F8FC] text-[#21649A] dark:border-white/10 dark:bg-white/5 dark:text-[#8FCB86]">

@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useReducedMotion } from "../../../hooks/useReducedMotion";
 import { ArrowRight, Check, Clock, Compass, FileCheck, Handshake, Sprout, Users, Wallet } from "lucide-react";
 import { cx } from "../../../utils/cx";
 import { CmsLink, hasLink, strings, visibleItems } from "../primitives";
@@ -36,7 +37,7 @@ export function CxoHero({ content: c, root }) {
       <div className="site-frame relative px-4 pb-14 sm:px-6 lg:pb-24">
         <div className="mt-10 lg:mt-14 lg:w-[52%] lg:pr-6">
           {c.eyebrow ? (
-            <p className="inline-flex items-center rounded-2xl border border-[#8FCB86]/40 bg-[#8FCB86]/10 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8FCB86] sm:rounded-full sm:text-[12px]">
+            <p className="inline-flex items-center rounded-2xl border border-[#8FCB86]/40 bg-[#8FCB86]/10 px-4 py-1.5 text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-[#8FCB86] sm:rounded-full sm:text-[0.75rem]">
               {c.eyebrow}
             </p>
           ) : null}
@@ -50,7 +51,7 @@ export function CxoHero({ content: c, root }) {
             ) : null}
           </h1>
           <span aria-hidden="true" className="mt-6 block h-1 w-16 bg-[#54B848]" />
-          <div className="mt-6 space-y-4 text-[15px] leading-relaxed text-white/85 sm:text-[16px] lg:text-[17px]">
+          <div className="mt-6 space-y-4 text-[0.9375rem] leading-relaxed text-white/85 sm:text-[1rem] lg:text-[1.0625rem]">
             {textBlocks(c.paragraphs).map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
@@ -71,7 +72,7 @@ export function CxoHero({ content: c, root }) {
         {trust.length ? (
           <ul className="relative z-10 mx-4 -mt-16 grid gap-x-5 gap-y-3 border border-white/20 bg-[#102A40]/85 p-5 backdrop-blur-md sm:absolute sm:bottom-8 sm:left-6 sm:right-6 sm:mx-0 sm:mt-0 sm:grid-cols-2 lg:bottom-12 lg:left-12 lg:right-10">
             {trust.map((item) => (
-              <li key={item} className="flex items-start gap-3 text-[13px] font-medium leading-snug text-white sm:text-[14px]">
+              <li key={item} className="flex items-start gap-3 text-[0.8125rem] font-medium leading-snug text-white sm:text-[0.875rem]">
                 <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#54B848] text-[#102A40]">
                   <Check className="h-3 w-3" aria-hidden="true" />
                 </span>
@@ -162,7 +163,7 @@ export function CxoDrift({ content: c, root }) {
                 )}
               >
                 <Clock className="h-5 w-5 shrink-0 text-[#21649A] dark:text-[#8FCB86]" aria-hidden="true" />
-                <span className="text-[15px] leading-snug text-[#18324A] dark:text-slate-200 sm:text-base">{item}</span>
+                <span className="text-[0.9375rem] leading-snug text-[#18324A] dark:text-slate-200 sm:text-base">{item}</span>
               </motion.li>
             ))}
           </ul>
@@ -191,7 +192,7 @@ export function CxoFamilyCfo({ content: c, root }) {
             {c.heading}
           </h2>
           {c.text ? <p className={cx(BODY, "mt-6")}>{c.text}</p> : null}
-          {c.lead ? <p className="mt-4 text-base font-medium leading-[1.8] text-[#15344F] dark:text-white sm:text-[17px]">{c.lead}</p> : null}
+          {c.lead ? <p className="mt-4 text-base font-medium leading-[1.8] text-[#15344F] dark:text-white sm:text-[1.0625rem]">{c.lead}</p> : null}
         </div>
 
         <div className="mt-12">
@@ -244,7 +245,7 @@ export function CxoFamilyCfo({ content: c, root }) {
                       <Ico name={role.icon} className="h-5 w-5" />
                     </span>
                     <h3 className="font-display text-[1.2rem] font-medium leading-snug text-[#15344F] dark:text-white">{role.title}</h3>
-                    <p className="mt-2 text-[14.5px] leading-relaxed text-[#5E6D7B] dark:text-slate-300">{upperFirst(role.text)}</p>
+                    <p className="mt-2 text-[0.9063rem] leading-relaxed text-[#5E6D7B] dark:text-slate-300">{upperFirst(role.text)}</p>
                   </div>
                 </motion.li>
               ))}
@@ -331,7 +332,7 @@ export function CxoWhoWeHelp({ content: c, root }) {
                       <Ico name={item.icon} className="h-6 w-6" />
                     </span>
                     <h3 className="mt-5 font-display text-[1.8rem] font-medium leading-tight text-white sm:text-[2.1rem]">{item.title}</h3>
-                    <p className="mt-4 max-w-xl text-base leading-[1.85] text-white/85 sm:text-[17px]">{item.text}</p>
+                    <p className="mt-4 max-w-xl text-base leading-[1.85] text-white/85 sm:text-[1.0625rem]">{item.text}</p>
                   </div>
                 </div>
               ))}
@@ -403,7 +404,7 @@ export function CxoEarning({ content: c, root }) {
         <div className="relative mt-12 grid gap-5 md:grid-cols-2 md:gap-16">
           <motion.div style={{ x: earnX }} className="flex flex-col border border-white/15 bg-white/[0.06] p-8 backdrop-blur-md sm:p-10">
             <Wallet className="h-9 w-9 text-white/60" strokeWidth={1.25} aria-hidden="true" />
-            <p className="mt-6 text-base leading-[1.85] text-white/75 sm:text-[17px]">
+            <p className="mt-6 text-base leading-[1.85] text-white/75 sm:text-[1.0625rem]">
               {c.earnTitle ? <strong className="font-display text-[1.45rem] font-medium text-white">{c.earnTitle}</strong> : null} {c.earnText}
             </p>
           </motion.div>
@@ -418,14 +419,14 @@ export function CxoEarning({ content: c, root }) {
 
           <motion.div style={{ x: createX }} className="flex flex-col bg-[#54B848] p-8 text-[#102A40] shadow-[0_20px_50px_rgba(84,184,72,0.25)] sm:p-10">
             <Sprout className="h-9 w-9" strokeWidth={1.25} aria-hidden="true" />
-            <p className="mt-6 text-base leading-[1.85] text-[#102A40]/90 sm:text-[17px]">
+            <p className="mt-6 text-base leading-[1.85] text-[#102A40]/90 sm:text-[1.0625rem]">
               {c.createTitle ? <strong className="font-display text-[1.45rem] font-medium text-[#102A40]">{c.createTitle}</strong> : null}{" "}
               {c.createText}
             </p>
           </motion.div>
         </div>
 
-        {c.summary ? <p className="mt-10 max-w-4xl text-base leading-[1.8] text-white/85 sm:text-[17px]">{c.summary}</p> : null}
+        {c.summary ? <p className="mt-10 max-w-4xl text-base leading-[1.8] text-white/85 sm:text-[1.0625rem]">{c.summary}</p> : null}
 
         <div aria-hidden="true" className="mt-12 h-px bg-white/15">
           <motion.div style={{ scaleX: lineScale }} className="h-px origin-left bg-[#54B848]" />
@@ -445,7 +446,7 @@ export function CxoEarning({ content: c, root }) {
                 {pad2(idx + 1)}
               </span>
               <h3 className="mt-4 font-display text-[1.35rem] font-medium leading-snug text-white">{item.title}</h3>
-              <p className="mt-3 text-[15px] leading-relaxed text-white/75 sm:text-base">{item.text}</p>
+              <p className="mt-3 text-[0.9375rem] leading-relaxed text-white/75 sm:text-base">{item.text}</p>
             </motion.li>
           ))}
         </ol>
@@ -485,7 +486,7 @@ export function CxoHowWeHelp({ content: c, root }) {
                 <Ico name={featured.icon} className="h-5 w-5" />
               </span>
               <h3 className="mt-6 max-w-lg font-display text-[1.8rem] font-medium leading-tight sm:text-[2.1rem]">{featured.title}</h3>
-              <p className="mt-4 max-w-lg text-[15px] leading-relaxed text-white/85 sm:text-base">{featured.text}</p>
+              <p className="mt-4 max-w-lg text-[0.9375rem] leading-relaxed text-white/85 sm:text-base">{featured.text}</p>
             </motion.article>
           ) : null}
 
@@ -517,7 +518,7 @@ export function CxoHowWeHelp({ content: c, root }) {
                     <Ico name={item.icon} className="h-5 w-5" />
                   </span>
                   <h3 className="font-display text-[1.25rem] font-medium leading-snug text-[#15344F] dark:text-white">{item.title}</h3>
-                  <p className="mt-3 text-[14.5px] leading-relaxed text-[#5E6D7B] dark:text-slate-300">{item.text}</p>
+                  <p className="mt-3 text-[0.9063rem] leading-relaxed text-[#5E6D7B] dark:text-slate-300">{item.text}</p>
                 </div>
               </motion.article>
             );
@@ -546,7 +547,7 @@ export function CxoSoundingBoard({ content: c, root }) {
           <h2 id="sounding-heading" className={`${H2_SIZE} text-white`}>
             {c.heading}
           </h2>
-          {c.text ? <p className="mt-6 text-base leading-[1.8] text-white/75 sm:text-[17px]">{c.text}</p> : null}
+          {c.text ? <p className="mt-6 text-base leading-[1.8] text-white/75 sm:text-[1.0625rem]">{c.text}</p> : null}
           {c.callout ? (
             <p className="mt-6 flex items-center gap-3 font-display text-[1.25rem] text-[#8FCB86]">
               <Compass className="h-5 w-5" aria-hidden="true" />
@@ -558,7 +559,7 @@ export function CxoSoundingBoard({ content: c, root }) {
               <motion.li
                 key={item}
                 {...reveal(idx % 3)}
-                className="border border-white/15 bg-white/[0.05] px-4 py-2.5 text-[14px] leading-snug text-white/90 transition-colors duration-300 hover:border-[#54B848]/70"
+                className="border border-white/15 bg-white/[0.05] px-4 py-2.5 text-[0.875rem] leading-snug text-white/90 transition-colors duration-300 hover:border-[#54B848]/70"
               >
                 {item}
               </motion.li>
@@ -605,7 +606,7 @@ export function CxoFreedom({ content: c, root }) {
                     <div className="flex flex-1 items-start gap-4 border border-[#DCE4E8] bg-white p-6 dark:border-white/10 dark:bg-white/[0.04]">
                       <div className="flex-1">
                         <h3 className="font-display text-[1.35rem] font-medium leading-snug text-[#15344F] dark:text-white">{item.title}</h3>
-                        <p className="mt-2 text-[15px] leading-relaxed text-[#5E6D7B] dark:text-slate-300 sm:text-base">{item.text}</p>
+                        <p className="mt-2 text-[0.9375rem] leading-relaxed text-[#5E6D7B] dark:text-slate-300 sm:text-base">{item.text}</p>
                       </div>
                       <Ico name={item.icon} className="h-6 w-6 shrink-0 text-[#54B848]" />
                     </div>
@@ -618,7 +619,7 @@ export function CxoFreedom({ content: c, root }) {
 
         {c.note || c.legacy ? (
           <div className="mt-12 grid gap-5 lg:grid-cols-2">
-            {c.note ? <p className="bg-[#15344F] p-8 text-base leading-[1.8] text-white/90 sm:p-10 sm:text-[17px]">{c.note}</p> : null}
+            {c.note ? <p className="bg-[#15344F] p-8 text-base leading-[1.8] text-white/90 sm:p-10 sm:text-[1.0625rem]">{c.note}</p> : null}
             {c.legacy ? (
               <p className="bg-[#54B848] p-8 font-display text-[1.2rem] leading-snug text-[#102A40] sm:p-10 sm:text-[1.3rem]">{c.legacy}</p>
             ) : null}
@@ -672,7 +673,7 @@ export function CxoDeliverables({ content: c, root }) {
                 <h4 className="mt-5 font-display text-[1.25rem] font-medium leading-snug text-[#15344F] dark:text-white">
                   {String(item.title || "").replace(/:$/, "")}
                 </h4>
-                <p className="mt-2 text-[15px] leading-relaxed text-[#5E6D7B] dark:text-slate-300">{upperFirst(item.text)}</p>
+                <p className="mt-2 text-[0.9375rem] leading-relaxed text-[#5E6D7B] dark:text-slate-300">{upperFirst(item.text)}</p>
               </motion.li>
             ))}
           </ol>
@@ -732,7 +733,7 @@ function WhyRow({ item, index }) {
         <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-[#54B848]/15 text-[#8FCB86] ring-1 ring-[#54B848]/30 transition-colors duration-300 group-hover:bg-[#54B848] group-hover:text-[#102A40]">
           <Ico name={item.icon} className="h-6 w-6" strokeWidth={1.6} />
         </span>
-        <p className="pt-1 text-[15px] leading-relaxed text-white/75 sm:text-base">{item.text}</p>
+        <p className="pt-1 text-[0.9375rem] leading-relaxed text-white/75 sm:text-base">{item.text}</p>
       </motion.div>
     </li>
   );
@@ -794,7 +795,7 @@ export function CxoHowWeWork({ content: c, root }) {
               >
                 <span className={cx("font-display text-[2rem] leading-none", isLast ? "text-[#102A40]/60" : "text-white/40")}>{pad2(idx + 1)}</span>
                 <h3 className="mt-4 font-display text-[1.3rem] font-medium leading-snug">{step.title}</h3>
-                <p className={cx("mt-2 text-[15px] leading-relaxed", isLast ? "text-[#102A40]/85" : "text-white/80")}>{step.text}</p>
+                <p className={cx("mt-2 text-[0.9375rem] leading-relaxed", isLast ? "text-[#102A40]/85" : "text-white/80")}>{step.text}</p>
               </motion.li>
             );
           })}
@@ -814,7 +815,7 @@ export function CxoStories({ content: c, root }) {
           <h2 id="stories-heading" className={H2}>
             {c.heading}
           </h2>
-          {c.note ? <p className="text-[14px] leading-relaxed text-[#5E6D7B] dark:text-slate-400">{c.note}</p> : null}
+          {c.note ? <p className="text-[0.875rem] leading-relaxed text-[#5E6D7B] dark:text-slate-400">{c.note}</p> : null}
         </div>
 
         <div className="mt-12 space-y-8">
@@ -833,14 +834,14 @@ export function CxoStories({ content: c, root }) {
                   <h3 className="mt-5 font-display text-[1.6rem] font-medium leading-snug text-white sm:text-[1.8rem]">{story.title}</h3>
                 </div>
                 <div className="flex items-center p-8 sm:p-10 lg:col-span-7 lg:p-14">
-                  <p className="border-l-2 border-[#54B848] pl-6 text-base leading-[1.9] text-[#18324A] dark:text-slate-200 sm:text-[17px]">{story.text}</p>
+                  <p className="border-l-2 border-[#54B848] pl-6 text-base leading-[1.9] text-[#18324A] dark:text-slate-200 sm:text-[1.0625rem]">{story.text}</p>
                 </div>
               </motion.article>
             );
           })}
         </div>
 
-        {c.disclaimer ? <p className="mt-8 text-[14px] italic leading-relaxed text-[#5E6D7B] dark:text-slate-400">{c.disclaimer}</p> : null}
+        {c.disclaimer ? <p className="mt-8 text-[0.875rem] italic leading-relaxed text-[#5E6D7B] dark:text-slate-400">{c.disclaimer}</p> : null}
       </div>
     </section>
   );
@@ -881,7 +882,7 @@ export function CxoFaqsClosing({ content: c, root }) {
       {disclaimer.length ? (
         <section aria-label="Disclaimer" className="border-t border-[#DCE4E8] bg-white py-8 dark:border-white/10 dark:bg-[#071321]">
           {disclaimer.map((paragraph) => (
-            <p key={paragraph} className="site-frame px-4 text-[13px] leading-relaxed text-[#5E6D7B] dark:text-slate-400 sm:px-6">
+            <p key={paragraph} className="site-frame px-4 text-[0.8125rem] leading-relaxed text-[#5E6D7B] dark:text-slate-400 sm:px-6">
               {paragraph}
             </p>
           ))}

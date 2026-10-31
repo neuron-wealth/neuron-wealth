@@ -112,12 +112,12 @@ function PinnedScroll({ content, look, headingId, root, cards, reduce }) {
         <div ref={viewportRef} className="mt-4 flex min-h-0 flex-col overflow-hidden">
           <motion.ul ref={listRef} style={{ x }} className="site-gutter-x flex min-h-0 w-max items-stretch gap-4">
             {cards.map((item, index) => (
-              <>
-                <WealthCard key={item.id} item={item} fit />
+              <Fragment key={item.id}>
+                <WealthCard item={item} fit />
                 {index < cards.length - 1 && (
                   <ArrowConnector key={`arrow-${item.id}`} index={index} reduce={reduce} />
                 )}
-              </>
+              </Fragment>
             ))}
           </motion.ul>
         </div>
@@ -165,12 +165,12 @@ export default function CardCarousel({ id, content, design, root }) {
         ) : (
           <ul className="mt-8 flex snap-x items-stretch gap-4 overflow-x-auto pb-2">
             {cards.map((item, index) => (
-              <>
-                <WealthCard key={item.id} item={item} />
+              <Fragment key={item.id}>
+                <WealthCard item={item} />
                 {index < cards.length - 1 && (
                   <ArrowConnector key={`arrow-${item.id}`} index={index} reduce={reduce} />
                 )}
-              </>
+              </Fragment>
             ))}
           </ul>
         )}

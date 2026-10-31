@@ -1,0 +1,14 @@
+# Security and caching headers for the static website (Netlify / Cloudflare Pages format).
+# frame-ancestors lets the admin console's live preview embed the site. If the admin is hosted on
+# another domain, add that domain here.
+/*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), geolocation=(), payment=(), microphone=(self)
+  Content-Security-Policy: frame-ancestors 'self' https://neuronwealth.com https://*.neuronwealth.com
+  Cross-Origin-Opener-Policy: same-origin-allow-popups
+
+# Hashed build files never change, so browsers can keep them for a year.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable

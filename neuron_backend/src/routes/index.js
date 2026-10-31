@@ -8,6 +8,7 @@ const siteSettingsRoutes = require("./siteSettingsRoutes");
 const pageRoutes = require("./pageRoutes");
 const blogRoutes = require("./blogRoutes");
 const notificationRoutes = require("./notificationRoutes");
+const libraryRoutes = require("./libraryRoutes");
 const { RECORD_KEYS } = require("../config/recordTypes");
 
 const router = Router();
@@ -20,5 +21,6 @@ router.use("/site-settings", siteSettingsRoutes);
 router.use("/pages", pageRoutes);
 router.use("/blogs", blogRoutes);
 router.use("/notifications", notificationRoutes);
+router.use("/library", libraryRoutes);
 
 module.exports = router;

@@ -675,7 +675,7 @@ function ShareTaxCarousel({ items }) {
                 aria-current={idx === active ? "true" : undefined}
                 onClick={() => setActive(idx)}
                 className={cx(
-                  "h-2 rounded-full transition-all duration-300",
+                  "relative h-2 rounded-full transition-all duration-300 before:absolute before:-inset-y-2 before:-inset-x-[5px] before:content-['']",
                   idx === active ? "w-8 bg-[#54B848]" : "w-2 bg-[#15344F]/25 hover:bg-[#15344F]/50 dark:bg-white/30",
                   FOCUS
                 )}

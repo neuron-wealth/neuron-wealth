@@ -90,7 +90,6 @@ function DropdownPanel({ item, onSelect }) {
             <PendingLink
               key={subItem.id}
               item={subItem}
-              role="menuitem"
               onClick={onSelect}
               className={cx(
                 "group/item flex min-w-0 w-full items-center gap-3 rounded-xl p-2.5 transition-all cursor-pointer",
@@ -281,7 +280,11 @@ export default function Header() {
       }
     };
     const onKeyDown = (e) => {
-      if (e.key === "Escape") closeDropdown();
+      if (e.key !== "Escape") return;
+      // If focus is on a link inside the open dropdown, hand it back to that dropdown's button.
+      const wrapper = document.activeElement?.closest?.("[data-nav-dropdown]");
+      closeDropdown();
+      wrapper?.querySelector("button")?.focus();
     };
     document.addEventListener("pointerdown", onPointerDown);
     document.addEventListener("keydown", onKeyDown);
@@ -395,9 +398,9 @@ export default function Header() {
                       {item.children ? (
                         <div
                           className="relative"
+                          data-nav-dropdown
                           onMouseEnter={() => handleDropdownEnter(item.key)}
                           onMouseLeave={() => handleDropdownLeave(item.key)}
-                          onFocus={() => handleDropdownEnter(item.key)}
                           onBlur={(e) => {
                             if (!e.currentTarget.contains(e.relatedTarget)) {
                               handleDropdownLeave(item.key);
@@ -430,8 +433,6 @@ export default function Header() {
                           </button>
 
                           <div
-                            role="menu"
-                            aria-label={`${item.label} submenu`}
                             className={cx(
                               "absolute top-full z-50 pt-2 transition-all duration-200 whitespace-normal",
                               dropdownPosition(item, index, items.length),

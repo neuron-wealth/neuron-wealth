@@ -1,5 +1,11 @@
 function rateLimit({ windowMs, max, message }) {
   const hits = new Map();
+  // Drop finished windows now and then so the map cannot grow without limit.
+  const sweep = setInterval(() => {
+    const now = Date.now();
+    for (const [key, entry] of hits) if (now - entry.start > windowMs) hits.delete(key);
+  }, windowMs);
+  sweep.unref?.();
 
   return (req, res, next) => {
     const key = req.ip || "local";

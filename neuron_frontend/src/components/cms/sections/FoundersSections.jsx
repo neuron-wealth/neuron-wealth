@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
+import { useReducedMotion } from "../../../hooks/useReducedMotion";
 import { ArrowRight, Building2, Check, HeartHandshake, House, Landmark, PhoneCall, Scale, ShieldCheck } from "lucide-react";
 import { cx } from "../../../utils/cx";
 import { CmsLink, hasLink, strings, visibleItems } from "../primitives";
@@ -50,7 +51,7 @@ export function FoundersHero({ content: c, root }) {
       <div className="site-frame px-4 pb-16 sm:px-6 lg:pb-24">
         <div className="mt-10 max-w-3xl lg:mt-16">
           {c.eyebrow ? (
-            <p className="inline-flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.2em] text-[#8FCB86] sm:text-[13px]">
+            <p className="inline-flex items-center gap-3 text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-[#8FCB86] sm:text-[0.8125rem]">
               <span aria-hidden="true" className="h-px w-8 bg-[#8FCB86]" />
               {c.eyebrow}
             </p>
@@ -64,7 +65,7 @@ export function FoundersHero({ content: c, root }) {
               </>
             ) : null}
           </h1>
-          <div className="mt-6 space-y-4 text-[15px] leading-relaxed text-white/90 sm:text-[16px] lg:text-[17px]">
+          <div className="mt-6 space-y-4 text-[0.9375rem] leading-relaxed text-white/90 sm:text-[1rem] lg:text-[1.0625rem]">
             {textBlocks(c.paragraphs).map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
@@ -77,7 +78,7 @@ export function FoundersHero({ content: c, root }) {
           {strings(c.trustItems).length ? (
             <ul className="mt-10 grid gap-x-6 gap-y-3 border-t border-white/15 pt-6 sm:grid-cols-2">
               {strings(c.trustItems).map((item) => (
-                <li key={item} className="flex items-start gap-2.5 text-[14px] font-medium leading-snug text-white/90">
+                <li key={item} className="flex items-start gap-2.5 text-[0.875rem] font-medium leading-snug text-white/90">
                   <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#8FCB86]" aria-hidden="true" />
                   {item}
                 </li>
@@ -144,7 +145,7 @@ export function FoundersExposed({ content: c, root }) {
               </>
             ) : null}
           </h2>
-          {c.intro ? <p className="mt-6 text-base leading-[1.8] text-white/75 sm:text-[17px]">{c.intro}</p> : null}
+          {c.intro ? <p className="mt-6 text-base leading-[1.8] text-white/75 sm:text-[1.0625rem]">{c.intro}</p> : null}
         </div>
 
         <div className="relative mt-12 grid gap-5 lg:grid-cols-12">
@@ -154,7 +155,7 @@ export function FoundersExposed({ content: c, root }) {
             className="relative flex min-h-[20rem] flex-col justify-between overflow-hidden bg-[#F7F8F5] p-8 text-[#15344F] sm:p-10 lg:col-span-5"
           >
             <span className="absolute inset-y-0 left-12 w-px bg-[#54B848]/40" aria-hidden="true" />
-            <p className="relative pl-8 text-[12px] font-semibold uppercase tracking-[0.2em] text-[#21649A]">{c.paperLabel}</p>
+            <p className="relative pl-8 text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-[#21649A]">{c.paperLabel}</p>
             <div aria-hidden="true" className="relative mt-10 flex h-36 items-end gap-3 pl-8">
               {[30, 45, 62, 80, 100].map((height) => (
                 <span key={height} style={{ height: `${height}%` }} className="w-8 bg-gradient-to-t from-[#21649A] to-[#54B848] sm:w-10" />
@@ -174,14 +175,14 @@ export function FoundersExposed({ content: c, root }) {
           <motion.div {...reveal(1)} className="relative isolate overflow-hidden p-8 sm:p-10 lg:col-span-7 lg:pl-14">
             {imgSrc(c.image) ? <img {...imgProps(c.image)} loading="lazy" className="absolute inset-0 -z-20 h-full w-full object-cover" /> : null}
             <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-br from-[#071321]/95 via-[#0B1E30]/88 to-[#15344F]/80" />
-            <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-[#8FCB86]">{c.realLabel}</p>
+            <p className="text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-[#8FCB86]">{c.realLabel}</p>
             <ul className="mt-6 divide-y divide-white/15">
               {visibleItems(c.items).map((item) => (
                 <li key={item.id || item.text} className="flex items-center gap-5 py-5 first:pt-0 last:pb-0">
                   <span className="grid h-12 w-12 shrink-0 place-items-center border border-white/20 bg-white/10 text-[#8FCB86] backdrop-blur-sm">
                     <Ico name={item.icon} className="h-5 w-5" strokeWidth={1.75} />
                   </span>
-                  <p className="text-base leading-relaxed text-white/90 sm:text-[17px]">{item.text}</p>
+                  <p className="text-base leading-relaxed text-white/90 sm:text-[1.0625rem]">{item.text}</p>
                 </li>
               ))}
             </ul>
@@ -201,7 +202,7 @@ export function FoundersExposed({ content: c, root }) {
                 </>
               ) : null}
             </p>
-            <p className="text-base leading-[1.8] text-white/75 sm:text-[17px]">{c.closingText}</p>
+            <p className="text-base leading-[1.8] text-white/75 sm:text-[1.0625rem]">{c.closingText}</p>
           </div>
         </div>
       ) : null}
@@ -246,7 +247,7 @@ export function FoundersBalanceSheets({ content: c, root }) {
         </div>
 
         {c.summaryLead || c.summaryText ? (
-          <p className="mx-auto mt-10 max-w-4xl text-center text-base leading-[1.85] text-[#18324A] dark:text-slate-200 sm:text-[17px]">
+          <p className="mx-auto mt-10 max-w-4xl text-center text-base leading-[1.85] text-[#18324A] dark:text-slate-200 sm:text-[1.0625rem]">
             {c.summaryLead ? <strong className="font-semibold text-[#15344F] dark:text-white">{c.summaryLead}</strong> : null} {c.summaryText}
           </p>
         ) : null}
@@ -318,7 +319,7 @@ function PersonaAccordion({ items }) {
                   isActive ? "lg:max-h-48 lg:opacity-100" : "lg:max-h-0 lg:opacity-0",
                 )}
               >
-                <p className="mt-3 text-[15px] leading-relaxed text-white/85 lg:w-[24rem] xl:w-[28rem]">{item.text}</p>
+                <p className="mt-3 text-[0.9375rem] leading-relaxed text-white/85 lg:w-[24rem] xl:w-[28rem]">{item.text}</p>
               </div>
             </div>
           </li>
@@ -404,11 +405,11 @@ export function FoundersStages({ content: c, root }) {
                       aria-hidden="true"
                       className={cx("absolute top-10 hidden h-px w-8 bg-[#54B848]/60 lg:block", onLeft ? "-right-8" : "-left-8")}
                     />
-                    <span className="text-[12px] font-semibold uppercase tracking-[0.18em] text-[#8FCB86]">
+                    <span className="text-[0.75rem] font-semibold uppercase tracking-[0.18em] text-[#8FCB86]">
                       {c.stageLabel || "Stage"} {pad2(idx + 1)}
                     </span>
                     <h3 className="mt-2 font-display text-[1.4rem] font-medium leading-snug">{stage.title}</h3>
-                    <p className="mt-3 text-[15px] leading-relaxed text-slate-300 sm:text-base">{stage.text}</p>
+                    <p className="mt-3 text-[0.9375rem] leading-relaxed text-slate-300 sm:text-base">{stage.text}</p>
                   </div>
                 </div>
               </motion.li>
@@ -494,7 +495,7 @@ export function FoundersLegacy({ content: c, root }) {
                         <span className="mr-2 text-[0.9rem] text-[#21649A]/60 dark:text-[#8FCB86]/70">{pad2(idx + 1)}</span>
                         {String(item.title || "").replace(/,$/, "")}
                       </h3>
-                      <p className="mt-2 text-[15px] leading-relaxed text-[#5E6D7B] dark:text-slate-300">{upperFirst(item.text)}</p>
+                      <p className="mt-2 text-[0.9375rem] leading-relaxed text-[#5E6D7B] dark:text-slate-300">{upperFirst(item.text)}</p>
                     </div>
                   </motion.li>
                 );
@@ -508,7 +509,7 @@ export function FoundersLegacy({ content: c, root }) {
             <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-[#54B848] text-[#102A40]">
               <Scale className="h-6 w-6" aria-hidden="true" />
             </span>
-            <p className="text-base leading-[1.8] text-white/90 sm:text-[17px]">{c.note}</p>
+            <p className="text-base leading-[1.8] text-white/90 sm:text-[1.0625rem]">{c.note}</p>
           </div>
         ) : null}
       </div>
@@ -539,7 +540,7 @@ export function FoundersKeep({ content: c, root }) {
                   </>
                 ) : null}
               </p>
-              {c.text ? <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">{c.text}</p> : null}
+              {c.text ? <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[1.0625rem]">{c.text}</p> : null}
             </div>
           </div>
           {c.approachHeading ? (
@@ -567,7 +568,7 @@ export function FoundersKeep({ content: c, root }) {
                 <Ico name={item.icon} className="h-6 w-6" />
               </span>
               <h3 className="relative mt-6 font-display text-[1.4rem] font-medium leading-snug text-[#15344F] dark:text-white">{item.title}</h3>
-              <p className="relative mt-3 text-[15px] leading-relaxed text-[#5E6D7B] dark:text-slate-300 sm:text-base">{item.text}</p>
+              <p className="relative mt-3 text-[0.9375rem] leading-relaxed text-[#5E6D7B] dark:text-slate-300 sm:text-base">{item.text}</p>
             </motion.li>
           ))}
         </ul>
@@ -615,7 +616,7 @@ export function FoundersHowWeHelp({ content: c, root }) {
                     <h3 className="mt-auto pt-8 font-display text-[1.6rem] font-medium leading-tight text-[#15344F] dark:text-white sm:text-[2rem]">
                       {item.title}
                     </h3>
-                    <p className="mt-4 max-w-xl text-[15px] leading-[1.8] text-[#5E6D7B] dark:text-slate-300 sm:text-[17px]">{item.text}</p>
+                    <p className="mt-4 max-w-xl text-[0.9375rem] leading-[1.8] text-[#5E6D7B] dark:text-slate-300 sm:text-[1.0625rem]">{item.text}</p>
                   </div>
                   <div className="relative h-56 overflow-hidden md:col-span-5 md:h-auto">
                     {imgSrc(item.image) ? (
@@ -629,7 +630,7 @@ export function FoundersHowWeHelp({ content: c, root }) {
                     ) : null}
                     <span
                       aria-hidden="true"
-                      className="absolute bottom-4 right-4 rounded-full bg-white/90 px-3 py-1 font-display text-[13px] text-[#15344F] backdrop-blur-sm"
+                      className="absolute bottom-4 right-4 rounded-full bg-white/90 px-3 py-1 font-display text-[0.8125rem] text-[#15344F] backdrop-blur-sm"
                     >
                       {number} / {total}
                     </span>
@@ -657,7 +658,7 @@ export function FoundersSoundingBoard({ content: c, root }) {
           <h2 id="sounding-heading" className={`${H2_SIZE} text-white`}>
             {c.heading}
           </h2>
-          {c.text ? <p className="mt-5 text-base leading-[1.8] text-white/85 sm:text-[17px]">{c.text}</p> : null}
+          {c.text ? <p className="mt-5 text-base leading-[1.8] text-white/85 sm:text-[1.0625rem]">{c.text}</p> : null}
           {c.callout ? (
             <div className="mt-7 flex items-center gap-4 border-t border-white/20 pt-6">
               <span className="relative grid h-12 w-12 shrink-0 place-items-center rounded-full bg-[#54B848] text-[#102A40]">
@@ -688,7 +689,7 @@ export function FoundersSoundingBoard({ content: c, root }) {
                   />
                 ))}
               </span>
-              <span className="flex-1 text-[15px] font-medium leading-snug text-[#18324A] dark:text-slate-200 sm:text-[17px]">{item}</span>
+              <span className="flex-1 text-[0.9375rem] font-medium leading-snug text-[#18324A] dark:text-slate-200 sm:text-[1.0625rem]">{item}</span>
               <PhoneCall
                 className="h-4 w-4 shrink-0 text-[#21649A]/35 transition-colors duration-300 group-hover:text-[#54B848] dark:text-white/35"
                 aria-hidden="true"
@@ -766,7 +767,7 @@ export function FoundersDeliverables({ content: c, root }) {
                 <h4 className="font-display text-[1.25rem] font-medium leading-snug text-[#15344F] dark:text-white">
                   {String(item.title || "").replace(/:$/, "")}
                 </h4>
-                <p className="mt-2 text-[15px] leading-relaxed text-[#5E6D7B] dark:text-slate-300">{upperFirst(item.text)}</p>
+                <p className="mt-2 text-[0.9375rem] leading-relaxed text-[#5E6D7B] dark:text-slate-300">{upperFirst(item.text)}</p>
               </div>
             </motion.li>
           ))}
@@ -787,7 +788,7 @@ export function FoundersDeliverables({ content: c, root }) {
                   <span className="grid h-11 w-11 place-items-center rounded-full bg-[#54B848] text-[#102A40]">
                     <Ico name={item.icon} className="h-5 w-5" />
                   </span>
-                  <span className="text-[15px] leading-relaxed text-white/90">{item.text}</span>
+                  <span className="text-[0.9375rem] leading-relaxed text-white/90">{item.text}</span>
                 </motion.li>
               ))}
             </ul>
@@ -829,7 +830,7 @@ export function FoundersWhyChoose({ content: c, root }) {
                 </span>
               </div>
               <h3 className="mt-5 font-display text-[1.3rem] font-medium leading-snug text-[#15344F] dark:text-white">{item.title}</h3>
-              <p className="mt-3 text-[15px] leading-relaxed text-[#5E6D7B] dark:text-slate-300 sm:text-base">{item.text}</p>
+              <p className="mt-3 text-[0.9375rem] leading-relaxed text-[#5E6D7B] dark:text-slate-300 sm:text-base">{item.text}</p>
             </motion.li>
           ))}
         </ul>
@@ -865,7 +866,7 @@ export function FoundersHowWeWork({ content: c, root }) {
             >
               <span className="font-display text-[2.4rem] leading-none opacity-50">{idx + 1}</span>
               <h3 className="mt-auto pt-8 font-display text-[1.3rem] font-medium leading-snug">{step.title}</h3>
-              <p className="mt-2 text-[15px] leading-relaxed opacity-85">{step.text}</p>
+              <p className="mt-2 text-[0.9375rem] leading-relaxed opacity-85">{step.text}</p>
             </motion.li>
           ))}
         </ol>
@@ -883,7 +884,7 @@ export function FoundersStories({ content: c, root }) {
         <h2 id="stories-heading" className={cx(H2, "max-w-3xl")}>
           {c.heading}
         </h2>
-        {c.note ? <p className="mt-4 text-[14px] leading-relaxed text-[#5E6D7B] dark:text-slate-400">{c.note}</p> : null}
+        {c.note ? <p className="mt-4 text-[0.875rem] leading-relaxed text-[#5E6D7B] dark:text-slate-400">{c.note}</p> : null}
 
         <div className="mt-10 space-y-6">
           {visibleItems(c.stories).map((story, idx) => (
@@ -907,7 +908,7 @@ export function FoundersStories({ content: c, root }) {
           ))}
         </div>
 
-        {c.disclaimer ? <p className="mt-8 text-[14px] italic leading-relaxed text-[#5E6D7B] dark:text-slate-400">{c.disclaimer}</p> : null}
+        {c.disclaimer ? <p className="mt-8 text-[0.875rem] italic leading-relaxed text-[#5E6D7B] dark:text-slate-400">{c.disclaimer}</p> : null}
       </div>
     </section>
   );
@@ -943,7 +944,7 @@ export function FoundersFaqsClosing({ content: c, root }) {
       {disclaimer.length ? (
         <section aria-label="Disclaimer" className="border-t border-[#DCE4E8] bg-white py-8 dark:border-white/10 dark:bg-[#071321]">
           {disclaimer.map((paragraph) => (
-            <p key={paragraph} className="site-frame px-4 text-[13px] leading-relaxed text-[#5E6D7B] dark:text-slate-400 sm:px-6">
+            <p key={paragraph} className="site-frame px-4 text-[0.8125rem] leading-relaxed text-[#5E6D7B] dark:text-slate-400 sm:px-6">
               {paragraph}
             </p>
           ))}

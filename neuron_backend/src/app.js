@@ -5,6 +5,22 @@ const apiRoutes = require("./routes");
 const { notFound, errorHandler } = require("./middleware/errorHandler");
 
 const app = express();
+app.disable("x-powered-by");
+app.set("trust proxy", env.trustProxy);
+
+// Baseline security headers for every API response (JSON only, so a strict policy is safe).
+app.use((req, res, next) => {
+  res.set({
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Cross-Origin-Opener-Policy": "same-origin",
+    "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+  });
+  if (!req.path.startsWith("/api/uploads")) res.set("Content-Security-Policy", "default-src 'none'; frame-ancestors 'none'");
+  if (env.nodeEnv === "production") res.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+  next();
+});
 
 app.use(
   cors({

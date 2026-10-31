@@ -1,11 +1,12 @@
 import { useId, useRef, useState } from "react";
-import { ExternalLink, FileText, Link2, Trash2, Upload } from "lucide-react";
+import { ExternalLink, FileText, FolderOpen, Link2, Trash2, Upload } from "lucide-react";
 import { Input } from "../../site/controls";
 import { useToast } from "../../../context/ToastContext";
 import { uploadDocument } from "../../../services/pageService";
 import { assetUrl } from "../../../config/site";
 import { emptyLink, isSafeHref } from "../../../utils/cms";
 import { useCmsMeta } from "../CmsMetaContext";
+import MediaPickerDialog from "../../media/MediaPickerDialog";
 
 const COMMON_PATHS = [
   "/",
@@ -115,6 +116,7 @@ function FileUpload({ link, set }) {
 export default function LinkField({ field, value, onChange }) {
   const link = { ...emptyLink(), ...(value || {}) };
   const listId = useId();
+  const [picking, setPicking] = useState(false);
   const set = (changes) => onChange({ ...link, ...changes });
   const valid = isSafeHref(link.href);
 
@@ -152,12 +154,19 @@ export default function LinkField({ field, value, onChange }) {
         <p className="mt-2 text-xs font-semibold text-red-600 dark:text-red-400">Start the address with "/", "#", "https://", "mailto:" or "tel:".</p>
       ) : null}
       <div className="mt-2.5 flex flex-wrap items-center justify-between gap-2">
-        <label className="inline-flex cursor-pointer items-center gap-2 text-xs font-semibold">
+        <div className="flex flex-wrap items-center gap-3">
+          <button type="button" onClick={() => setPicking(true)} className="btn btn-secondary focus-ring h-8 px-3 text-xs">
+            <FolderOpen className="h-3.5 w-3.5" aria-hidden="true" />
+            Choose from Library
+          </button>
+          <label className="inline-flex cursor-pointer items-center gap-2 text-xs font-semibold">
           <input type="checkbox" className="h-4 w-4 accent-[var(--accent)]" checked={link.newTab} onChange={(event) => set({ newTab: event.target.checked })} />
           Open in a new tab
-        </label>
+          </label>
+        </div>
         {field.hint ? <p className="muted text-xs">{field.hint}</p> : null}
       </div>
+      <MediaPickerDialog open={picking} onClose={() => setPicking(false)} onPick={(file) => set({ href: file.url, newTab: true })} />
     </fieldset>
   );
 }

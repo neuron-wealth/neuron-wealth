@@ -1,34 +1,35 @@
-import { useEffect } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import ErrorBoundary from "./components/common/ErrorBoundary";
 import Home from "./pages/Home/Home";
-import AboutUs from "./pages/About/AboutUs/AboutUs";
-import WhyAssociate from "./pages/About/WhyAssociate/WhyAssociate";
-import TeamPage from "./pages/About/Team/TeamPage";
-import GlobalInvestors from "./pages/Services/GlobalInvestors/GlobalInvestors";
-import FoundersAndEntrepreneurs from "./pages/Services/FoundersAndEntrepreneurs/FoundersAndEntrepreneurs";
-import GlobalIndians from "./pages/Services/GlobalIndians/GlobalIndians";
-import GlobalCitizensInIndia from "./pages/Services/GlobalCitizensInIndia/GlobalCitizensInIndia";
-import ProfessionalsAndCxos from "./pages/Services/ProfessionalsAndCxos/ProfessionalsAndCxos";
-import NrisReturningToIndia from "./pages/Services/NrisReturningToIndia/NrisReturningToIndia";
-import Contact from "./pages/Contact/Contact";
-import RefundPolicy from "./pages/Legal/RefundPolicy/RefundPolicy";
-import PrivacyPolicy from "./pages/Legal/PrivacyPolicy/PrivacyPolicy";
-import SebiRegulatoryCompliance from "./pages/Disclosures/SebiRegulatoryCompliance/SebiRegulatoryCompliance";
-import MaterialInformation from "./pages/Disclosures/MaterialInformation/MaterialInformation";
-import SebiInvestorCharter from "./pages/Disclosures/SebiInvestorCharter/SebiInvestorCharter";
-import SebiCodeOfConduct from "./pages/Disclosures/SebiCodeOfConduct/SebiCodeOfConduct";
-import GrievanceRedressal from "./pages/Disclosures/GrievanceRedressal/GrievanceRedressal";
-import FunctionsOfInvestmentAdviser from "./pages/Disclosures/FunctionsOfInvestmentAdviser/FunctionsOfInvestmentAdviser";
-import Risks from "./pages/Disclosures/Risks/Risks";
-import ConflictOfInterest from "./pages/Disclosures/ConflictOfInterest/ConflictOfInterest";
-import CfaCodeOfConduct from "./pages/Disclosures/CfaCodeOfConduct/CfaCodeOfConduct";
-import Disclaimer from "./pages/Legal/Disclaimer/Disclaimer";
-import InsightTopic from "./pages/Insights/InsightTopic";
-import CmsPreview from "./pages/CmsPreview/CmsPreview";
-import CmsPage from "./pages/CmsPage/CmsPage";
-import BlogList from "./pages/Blog/BlogList";
-import BlogPost from "./pages/Blog/BlogPost";
+// Pages other than Home load on demand (separate files), keeping the first download small.
+const AboutUs = lazy(() => import("./pages/About/AboutUs/AboutUs"));
+const WhyAssociate = lazy(() => import("./pages/About/WhyAssociate/WhyAssociate"));
+const TeamPage = lazy(() => import("./pages/About/Team/TeamPage"));
+const GlobalInvestors = lazy(() => import("./pages/Services/GlobalInvestors/GlobalInvestors"));
+const FoundersAndEntrepreneurs = lazy(() => import("./pages/Services/FoundersAndEntrepreneurs/FoundersAndEntrepreneurs"));
+const GlobalIndians = lazy(() => import("./pages/Services/GlobalIndians/GlobalIndians"));
+const GlobalCitizensInIndia = lazy(() => import("./pages/Services/GlobalCitizensInIndia/GlobalCitizensInIndia"));
+const ProfessionalsAndCxos = lazy(() => import("./pages/Services/ProfessionalsAndCxos/ProfessionalsAndCxos"));
+const NrisReturningToIndia = lazy(() => import("./pages/Services/NrisReturningToIndia/NrisReturningToIndia"));
+const Contact = lazy(() => import("./pages/Contact/Contact"));
+const RefundPolicy = lazy(() => import("./pages/Legal/RefundPolicy/RefundPolicy"));
+const PrivacyPolicy = lazy(() => import("./pages/Legal/PrivacyPolicy/PrivacyPolicy"));
+const SebiRegulatoryCompliance = lazy(() => import("./pages/Disclosures/SebiRegulatoryCompliance/SebiRegulatoryCompliance"));
+const MaterialInformation = lazy(() => import("./pages/Disclosures/MaterialInformation/MaterialInformation"));
+const SebiInvestorCharter = lazy(() => import("./pages/Disclosures/SebiInvestorCharter/SebiInvestorCharter"));
+const SebiCodeOfConduct = lazy(() => import("./pages/Disclosures/SebiCodeOfConduct/SebiCodeOfConduct"));
+const GrievanceRedressal = lazy(() => import("./pages/Disclosures/GrievanceRedressal/GrievanceRedressal"));
+const FunctionsOfInvestmentAdviser = lazy(() => import("./pages/Disclosures/FunctionsOfInvestmentAdviser/FunctionsOfInvestmentAdviser"));
+const Risks = lazy(() => import("./pages/Disclosures/Risks/Risks"));
+const ConflictOfInterest = lazy(() => import("./pages/Disclosures/ConflictOfInterest/ConflictOfInterest"));
+const CfaCodeOfConduct = lazy(() => import("./pages/Disclosures/CfaCodeOfConduct/CfaCodeOfConduct"));
+const Disclaimer = lazy(() => import("./pages/Legal/Disclaimer/Disclaimer"));
+const InsightTopic = lazy(() => import("./pages/Insights/InsightTopic"));
+const CmsPreview = lazy(() => import("./pages/CmsPreview/CmsPreview"));
+const CmsPage = lazy(() => import("./pages/CmsPage/CmsPage"));
+const BlogList = lazy(() => import("./pages/Blog/BlogList"));
+const BlogPost = lazy(() => import("./pages/Blog/BlogPost"));
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
@@ -57,6 +58,8 @@ export default function App() {
     <ErrorBoundary>
       <BrowserRouter>
         <ScrollToTop />
+        {/* While a page file loads, keep the screen calm (no layout change). */}
+        <Suspense fallback={<div className="min-h-screen" aria-busy="true" />}>
         <Routes>
           <Route path="/" element={<Home />} />
           {/* About dropdown subpages & URL aliases */}
@@ -174,6 +177,7 @@ export default function App() {
           {/* Pages created in the admin Website CMS; unknown addresses redirect home */}
           <Route path="*" element={<CmsPage />} />
         </Routes>
+        </Suspense>
       </BrowserRouter>
     </ErrorBoundary>
   );

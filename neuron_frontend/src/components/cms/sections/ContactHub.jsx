@@ -56,7 +56,12 @@ export default function ContactHub({ id, content, design, root }) {
     if (!form.subject.trim()) next.subject = "Enter a subject.";
     if (!form.message.trim()) next.message = "Please describe your advisory enquiry.";
     setErrors(next);
-    if (Object.keys(next).length) return;
+    const firstInvalid = ["name", "email", "subject", "message"].find((key) => next[key]);
+    if (firstInvalid) {
+      // Take keyboard and screen reader users straight to the first field that needs fixing.
+      requestAnimationFrame(() => document.getElementById(`contact-${firstInvalid}`)?.focus());
+      return;
+    }
 
     setSubmitting(true);
     setServerError("");
@@ -172,10 +177,11 @@ export default function ContactHub({ id, content, design, root }) {
                       placeholder="e.g. Rahul Sharma"
                       className="w-full rounded-xl border border-slate-300 bg-white pl-10 pr-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 focus:border-[#104b75] focus:outline-none focus:ring-2 focus:ring-[#104b75]/15 dark:border-white/15 dark:bg-[#102A40] dark:text-white dark:placeholder:text-slate-400 transition-colors"
                       aria-invalid={Boolean(errors.name)}
+                    aria-describedby={errors.name ? "contact-name-error" : undefined}
                     />
                   </div>
                   {errors.name ? (
-                    <p className="mt-1 text-xs text-red-600 dark:text-red-400">
+                    <p id="contact-name-error" className="mt-1 text-xs text-red-600 dark:text-red-400">
                       {errors.name}
                     </p>
                   ) : null}
@@ -199,10 +205,11 @@ export default function ContactHub({ id, content, design, root }) {
                       placeholder="e.g. rahul@example.com"
                       className="w-full rounded-xl border border-slate-300 bg-white pl-10 pr-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 focus:border-[#104b75] focus:outline-none focus:ring-2 focus:ring-[#104b75]/15 dark:border-white/15 dark:bg-[#102A40] dark:text-white dark:placeholder:text-slate-400 transition-colors"
                       aria-invalid={Boolean(errors.email)}
+                    aria-describedby={errors.email ? "contact-email-error" : undefined}
                     />
                   </div>
                   {errors.email ? (
-                    <p className="mt-1 text-xs text-red-600 dark:text-red-400">
+                    <p id="contact-email-error" className="mt-1 text-xs text-red-600 dark:text-red-400">
                       {errors.email}
                     </p>
                   ) : null}
@@ -243,9 +250,10 @@ export default function ContactHub({ id, content, design, root }) {
                   placeholder="e.g. NRI Returning to India / Family CFO Advisory"
                   className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 focus:border-[#104b75] focus:outline-none focus:ring-2 focus:ring-[#104b75]/15 dark:border-white/15 dark:bg-[#102A40] dark:text-white dark:placeholder:text-slate-400 transition-colors"
                   aria-invalid={Boolean(errors.subject)}
+                    aria-describedby={errors.subject ? "contact-subject-error" : undefined}
                 />
                 {errors.subject ? (
-                  <p className="mt-1 text-xs text-red-600 dark:text-red-400">
+                  <p id="contact-subject-error" className="mt-1 text-xs text-red-600 dark:text-red-400">
                     {errors.subject}
                   </p>
                 ) : null}
@@ -266,10 +274,11 @@ export default function ContactHub({ id, content, design, root }) {
                     placeholder="Please share details regarding your timeline, portfolio objectives, or specific advisory questions..."
                     className="min-h-[7.5rem] w-full flex-1 rounded-xl border border-slate-300 bg-white p-4 text-sm text-slate-800 placeholder:text-slate-400 focus:border-[#104b75] focus:outline-none focus:ring-2 focus:ring-[#104b75]/15 dark:border-white/15 dark:bg-[#102A40] dark:text-white dark:placeholder:text-slate-400 transition-colors resize-none"
                     aria-invalid={Boolean(errors.message)}
+                    aria-describedby={errors.message ? "contact-message-error" : undefined}
                   />
                 </div>
                 {errors.message ? (
-                  <p className="mt-1 text-xs text-red-600 dark:text-red-400">
+                  <p id="contact-message-error" className="mt-1 text-xs text-red-600 dark:text-red-400">
                     {errors.message}
                   </p>
                 ) : null}
@@ -285,7 +294,7 @@ export default function ContactHub({ id, content, design, root }) {
 
               {/* Server Error Alert */}
               {serverError ? (
-                <div className="flex items-start gap-2.5 rounded-xl border border-red-200 bg-red-50 p-4 text-xs font-medium text-red-700 dark:border-red-900/40 dark:bg-red-950/40 dark:text-red-300">
+                <div role="alert" className="flex items-start gap-2.5 rounded-xl border border-red-200 bg-red-50 p-4 text-xs font-medium text-red-700 dark:border-red-900/40 dark:bg-red-950/40 dark:text-red-300">
                   <AlertCircle className="h-4 w-4 shrink-0 text-red-600 dark:text-red-400 mt-0.5" />
                   <div>
                     <p className="font-semibold text-red-800 dark:text-red-200">Unable to submit</p>
@@ -316,7 +325,7 @@ export default function ContactHub({ id, content, design, root }) {
               </div>
 
               {ready ? (
-                <div className="flex items-start gap-3 rounded-xl border border-emerald-200/90 bg-emerald-50 p-4 text-sm font-semibold text-[#1F7A3A] dark:border-emerald-800/40 dark:bg-emerald-950/40 dark:text-emerald-300">
+                <div role="status" className="flex items-start gap-3 rounded-xl border border-emerald-200/90 bg-emerald-50 p-4 text-sm font-semibold text-[#1F7A3A] dark:border-emerald-800/40 dark:bg-emerald-950/40 dark:text-emerald-300">
                   <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-600 dark:text-emerald-400 mt-0.5" />
                   <div>
                     <p className="font-bold text-emerald-900 dark:text-emerald-200">

@@ -1,5 +1,8 @@
-import { Component } from "react";
+import { Component, Suspense, lazy } from "react";
 import { visibleItems } from "./primitives";
+
+// Inner-page section designs load on demand; each family file is fetched once and shared.
+const lazyNamed = (load, name) => lazy(() => load().then((module) => ({ default: module[name] })));
 import Hero from "./sections/Hero";
 import TableSection from "./sections/TableSection";
 import ImageCards from "./sections/ImageCards";
@@ -13,155 +16,155 @@ import CardGrid from "./sections/CardGrid";
 import ImageText from "./sections/ImageText";
 import Cta from "./sections/Cta";
 import Stats from "./sections/Stats";
-import CalendlyBooking from "./sections/CalendlyBooking";
-import DisclosureHero from "./sections/DisclosureHero";
+const CalendlyBooking = lazy(() => import("./sections/CalendlyBooking"));
+const DisclosureHero = lazy(() => import("./sections/DisclosureHero"));
 
-import AboutHero from "./sections/AboutHero";
-import WhyWeAre from "./sections/WhyWeAre";
-import WhoWeAre from "./sections/WhoWeAre";
-import WhatWeDo from "./sections/WhatWeDo";
-import VisionMission from "./sections/VisionMission";
-import Pillars from "./sections/Pillars";
+const AboutHero = lazy(() => import("./sections/AboutHero"));
+const WhyWeAre = lazy(() => import("./sections/WhyWeAre"));
+const WhoWeAre = lazy(() => import("./sections/WhoWeAre"));
+const WhatWeDo = lazy(() => import("./sections/WhatWeDo"));
+const VisionMission = lazy(() => import("./sections/VisionMission"));
+const Pillars = lazy(() => import("./sections/Pillars"));
 
-import WhyAssociateHero from "./sections/WhyAssociateHero";
-import AssociationPhilosophy from "./sections/AssociationPhilosophy";
-import SevenReasons from "./sections/SevenReasons";
-import PearlAssessment from "./sections/PearlAssessment";
+const WhyAssociateHero = lazy(() => import("./sections/WhyAssociateHero"));
+const AssociationPhilosophy = lazy(() => import("./sections/AssociationPhilosophy"));
+const SevenReasons = lazy(() => import("./sections/SevenReasons"));
+const PearlAssessment = lazy(() => import("./sections/PearlAssessment"));
 
-import TeamHero from "./sections/TeamHero";
-import Leadership from "./sections/Leadership";
-import TeamEcosystem from "./sections/TeamEcosystem";
-import TeamDisclaimer from "./sections/TeamDisclaimer";
+const TeamHero = lazy(() => import("./sections/TeamHero"));
+const Leadership = lazy(() => import("./sections/Leadership"));
+const TeamEcosystem = lazy(() => import("./sections/TeamEcosystem"));
+const TeamDisclaimer = lazy(() => import("./sections/TeamDisclaimer"));
 
-import CareerHero from "./sections/CareerHero";
-import CareerWhyWork from "./sections/CareerWhyWork";
-import CareerEthos from "./sections/CareerEthos";
+const CareerHero = lazy(() => import("./sections/CareerHero"));
+const CareerWhyWork = lazy(() => import("./sections/CareerWhyWork"));
+const CareerEthos = lazy(() => import("./sections/CareerEthos"));
 
-import ContactHero from "./sections/ContactHero";
-import ContactHub from "./sections/ContactHub";
-import ContactMap from "./sections/ContactMap";
+const ContactHero = lazy(() => import("./sections/ContactHero"));
+const ContactHub = lazy(() => import("./sections/ContactHub"));
+const ContactMap = lazy(() => import("./sections/ContactMap"));
 
-import ComplianceHero from "./sections/ComplianceHero";
-import ComplianceHub from "./sections/ComplianceHub";
+const ComplianceHero = lazy(() => import("./sections/ComplianceHero"));
+const ComplianceHub = lazy(() => import("./sections/ComplianceHub"));
 
-import PolicyHero from "./sections/PolicyHero";
-import PrivacyPolicyHub from "./sections/PrivacyPolicyHub";
-import DisclaimerHub from "./sections/DisclaimerHub";
-import RefundHub from "./sections/RefundHub";
+const PolicyHero = lazy(() => import("./sections/PolicyHero"));
+const PrivacyPolicyHub = lazy(() => import("./sections/PrivacyPolicyHub"));
+const DisclaimerHub = lazy(() => import("./sections/DisclaimerHub"));
+const RefundHub = lazy(() => import("./sections/RefundHub"));
 
-import NriReturnHero from "./sections/NriReturnHero";
-import NriReturnDrivers from "./sections/NriReturnDrivers";
-import NriWhoWeHelp from "./sections/NriWhoWeHelp";
-import NriFounderStory from "./sections/NriFounderStory";
-import NriRnorWindow from "./sections/NriRnorWindow";
-import NriFinancialDecisions from "./sections/NriFinancialDecisions";
-import NriTimelineRoadmap from "./sections/NriTimelineRoadmap";
-import NriValuePoints from "./sections/NriValuePoints";
-import NriCrossBorderAssets from "./sections/NriCrossBorderAssets";
-import NriDeliverables from "./sections/NriDeliverables";
-import NriWhyChoose from "./sections/NriWhyChoose";
-import NriFamilyStory from "./sections/NriFamilyStory";
-import NriFaqsClosing from "./sections/NriFaqsClosing";
+const NriReturnHero = lazy(() => import("./sections/NriReturnHero"));
+const NriReturnDrivers = lazy(() => import("./sections/NriReturnDrivers"));
+const NriWhoWeHelp = lazy(() => import("./sections/NriWhoWeHelp"));
+const NriFounderStory = lazy(() => import("./sections/NriFounderStory"));
+const NriRnorWindow = lazy(() => import("./sections/NriRnorWindow"));
+const NriFinancialDecisions = lazy(() => import("./sections/NriFinancialDecisions"));
+const NriTimelineRoadmap = lazy(() => import("./sections/NriTimelineRoadmap"));
+const NriValuePoints = lazy(() => import("./sections/NriValuePoints"));
+const NriCrossBorderAssets = lazy(() => import("./sections/NriCrossBorderAssets"));
+const NriDeliverables = lazy(() => import("./sections/NriDeliverables"));
+const NriWhyChoose = lazy(() => import("./sections/NriWhyChoose"));
+const NriFamilyStory = lazy(() => import("./sections/NriFamilyStory"));
+const NriFaqsClosing = lazy(() => import("./sections/NriFaqsClosing"));
 
-import {
-  GlobalIndiansHero,
-  GlobalIndiansWhatYouKeep,
-  GlobalIndiansApproach,
-  GlobalIndiansFamiliar,
-  GlobalIndiansWhoWeWorkWith,
-  GlobalIndiansWhyDifferent,
-  GlobalIndiansHowWeHelp,
-  GlobalIndiansWhyChoose,
-  GlobalIndiansHowWeWork,
-  GlobalIndiansFamilyStory,
-  GlobalIndiansFaqsClosing,
-} from "./sections/GlobalIndiansSections";
+const loadGlobalIndiansSections = () => import("./sections/GlobalIndiansSections");
+const GlobalIndiansHero = lazyNamed(loadGlobalIndiansSections, "GlobalIndiansHero");
+const GlobalIndiansWhatYouKeep = lazyNamed(loadGlobalIndiansSections, "GlobalIndiansWhatYouKeep");
+const GlobalIndiansApproach = lazyNamed(loadGlobalIndiansSections, "GlobalIndiansApproach");
+const GlobalIndiansFamiliar = lazyNamed(loadGlobalIndiansSections, "GlobalIndiansFamiliar");
+const GlobalIndiansWhoWeWorkWith = lazyNamed(loadGlobalIndiansSections, "GlobalIndiansWhoWeWorkWith");
+const GlobalIndiansWhyDifferent = lazyNamed(loadGlobalIndiansSections, "GlobalIndiansWhyDifferent");
+const GlobalIndiansHowWeHelp = lazyNamed(loadGlobalIndiansSections, "GlobalIndiansHowWeHelp");
+const GlobalIndiansWhyChoose = lazyNamed(loadGlobalIndiansSections, "GlobalIndiansWhyChoose");
+const GlobalIndiansHowWeWork = lazyNamed(loadGlobalIndiansSections, "GlobalIndiansHowWeWork");
+const GlobalIndiansFamilyStory = lazyNamed(loadGlobalIndiansSections, "GlobalIndiansFamilyStory");
+const GlobalIndiansFaqsClosing = lazyNamed(loadGlobalIndiansSections, "GlobalIndiansFaqsClosing");
 
-import {
-  GlobalCitizensHero,
-  GlobalCitizensFamiliar,
-  GlobalCitizensStatus,
-  GlobalCitizensHomeTax,
-  GlobalCitizensTaxFree,
-  GlobalCitizensShareTax,
-  GlobalCitizensReport,
-  GlobalCitizensInvest,
-  GlobalCitizensWhoWeHelp,
-  GlobalCitizensHowWeHelp,
-  GlobalCitizensPlan,
-  GlobalCitizensWhyChoose,
-  GlobalCitizensHowWeWork,
-  GlobalCitizensStories,
-  GlobalCitizensFaqsClosing,
-} from "./sections/GlobalCitizensSections";
+const loadGlobalCitizensSections = () => import("./sections/GlobalCitizensSections");
+const GlobalCitizensHero = lazyNamed(loadGlobalCitizensSections, "GlobalCitizensHero");
+const GlobalCitizensFamiliar = lazyNamed(loadGlobalCitizensSections, "GlobalCitizensFamiliar");
+const GlobalCitizensStatus = lazyNamed(loadGlobalCitizensSections, "GlobalCitizensStatus");
+const GlobalCitizensHomeTax = lazyNamed(loadGlobalCitizensSections, "GlobalCitizensHomeTax");
+const GlobalCitizensTaxFree = lazyNamed(loadGlobalCitizensSections, "GlobalCitizensTaxFree");
+const GlobalCitizensShareTax = lazyNamed(loadGlobalCitizensSections, "GlobalCitizensShareTax");
+const GlobalCitizensReport = lazyNamed(loadGlobalCitizensSections, "GlobalCitizensReport");
+const GlobalCitizensInvest = lazyNamed(loadGlobalCitizensSections, "GlobalCitizensInvest");
+const GlobalCitizensWhoWeHelp = lazyNamed(loadGlobalCitizensSections, "GlobalCitizensWhoWeHelp");
+const GlobalCitizensHowWeHelp = lazyNamed(loadGlobalCitizensSections, "GlobalCitizensHowWeHelp");
+const GlobalCitizensPlan = lazyNamed(loadGlobalCitizensSections, "GlobalCitizensPlan");
+const GlobalCitizensWhyChoose = lazyNamed(loadGlobalCitizensSections, "GlobalCitizensWhyChoose");
+const GlobalCitizensHowWeWork = lazyNamed(loadGlobalCitizensSections, "GlobalCitizensHowWeWork");
+const GlobalCitizensStories = lazyNamed(loadGlobalCitizensSections, "GlobalCitizensStories");
+const GlobalCitizensFaqsClosing = lazyNamed(loadGlobalCitizensSections, "GlobalCitizensFaqsClosing");
 
-import {
-  InvestorHero,
-  InvestorReasons,
-  InvestorFamiliar,
-  InvestorRules,
-  InvestorKeep,
-  InvestorRoutes,
-  InvestorIbkr,
-  InvestorGift,
-  InvestorGoals,
-  InvestorWhoWeHelp,
-  InvestorHowWeHelp,
-  InvestorPlan,
-  InvestorWhyChoose,
-  InvestorHowWeWork,
-  InvestorStories,
-  InvestorFaqsClosing,
-} from "./sections/GlobalInvestorsSections";
+const loadGlobalInvestorsSections = () => import("./sections/GlobalInvestorsSections");
+const InvestorHero = lazyNamed(loadGlobalInvestorsSections, "InvestorHero");
+const InvestorReasons = lazyNamed(loadGlobalInvestorsSections, "InvestorReasons");
+const InvestorFamiliar = lazyNamed(loadGlobalInvestorsSections, "InvestorFamiliar");
+const InvestorRules = lazyNamed(loadGlobalInvestorsSections, "InvestorRules");
+const InvestorKeep = lazyNamed(loadGlobalInvestorsSections, "InvestorKeep");
+const InvestorRoutes = lazyNamed(loadGlobalInvestorsSections, "InvestorRoutes");
+const InvestorIbkr = lazyNamed(loadGlobalInvestorsSections, "InvestorIbkr");
+const InvestorGift = lazyNamed(loadGlobalInvestorsSections, "InvestorGift");
+const InvestorGoals = lazyNamed(loadGlobalInvestorsSections, "InvestorGoals");
+const InvestorWhoWeHelp = lazyNamed(loadGlobalInvestorsSections, "InvestorWhoWeHelp");
+const InvestorHowWeHelp = lazyNamed(loadGlobalInvestorsSections, "InvestorHowWeHelp");
+const InvestorPlan = lazyNamed(loadGlobalInvestorsSections, "InvestorPlan");
+const InvestorWhyChoose = lazyNamed(loadGlobalInvestorsSections, "InvestorWhyChoose");
+const InvestorHowWeWork = lazyNamed(loadGlobalInvestorsSections, "InvestorHowWeWork");
+const InvestorStories = lazyNamed(loadGlobalInvestorsSections, "InvestorStories");
+const InvestorFaqsClosing = lazyNamed(loadGlobalInvestorsSections, "InvestorFaqsClosing");
 
-import {
-  FoundersHero,
-  FoundersFamiliar,
-  FoundersExposed,
-  FoundersBalanceSheets,
-  FoundersWhoWeHelp,
-  FoundersStages,
-  FoundersLegacy,
-  FoundersKeep,
-  FoundersHowWeHelp,
-  FoundersSoundingBoard,
-  FoundersDeliverables,
-  FoundersWhyChoose,
-  FoundersHowWeWork,
-  FoundersStories,
-  FoundersFaqsClosing,
-} from "./sections/FoundersSections";
+const loadFoundersSections = () => import("./sections/FoundersSections");
+const FoundersHero = lazyNamed(loadFoundersSections, "FoundersHero");
+const FoundersFamiliar = lazyNamed(loadFoundersSections, "FoundersFamiliar");
+const FoundersExposed = lazyNamed(loadFoundersSections, "FoundersExposed");
+const FoundersBalanceSheets = lazyNamed(loadFoundersSections, "FoundersBalanceSheets");
+const FoundersWhoWeHelp = lazyNamed(loadFoundersSections, "FoundersWhoWeHelp");
+const FoundersStages = lazyNamed(loadFoundersSections, "FoundersStages");
+const FoundersLegacy = lazyNamed(loadFoundersSections, "FoundersLegacy");
+const FoundersKeep = lazyNamed(loadFoundersSections, "FoundersKeep");
+const FoundersHowWeHelp = lazyNamed(loadFoundersSections, "FoundersHowWeHelp");
+const FoundersSoundingBoard = lazyNamed(loadFoundersSections, "FoundersSoundingBoard");
+const FoundersDeliverables = lazyNamed(loadFoundersSections, "FoundersDeliverables");
+const FoundersWhyChoose = lazyNamed(loadFoundersSections, "FoundersWhyChoose");
+const FoundersHowWeWork = lazyNamed(loadFoundersSections, "FoundersHowWeWork");
+const FoundersStories = lazyNamed(loadFoundersSections, "FoundersStories");
+const FoundersFaqsClosing = lazyNamed(loadFoundersSections, "FoundersFaqsClosing");
 
-import {
-  CxoHero,
-  CxoFamiliar,
-  CxoDrift,
-  CxoFamilyCfo,
-  CxoWhoWeHelp,
-  CxoEarning,
-  CxoHowWeHelp,
-  CxoSoundingBoard,
-  CxoFreedom,
-  CxoDeliverables,
-  CxoWhyChoose,
-  CxoHowWeWork,
-  CxoStories,
-  CxoFaqsClosing,
-} from "./sections/ProfessionalsSections";
+const loadProfessionalsSections = () => import("./sections/ProfessionalsSections");
+const CxoHero = lazyNamed(loadProfessionalsSections, "CxoHero");
+const CxoFamiliar = lazyNamed(loadProfessionalsSections, "CxoFamiliar");
+const CxoDrift = lazyNamed(loadProfessionalsSections, "CxoDrift");
+const CxoFamilyCfo = lazyNamed(loadProfessionalsSections, "CxoFamilyCfo");
+const CxoWhoWeHelp = lazyNamed(loadProfessionalsSections, "CxoWhoWeHelp");
+const CxoEarning = lazyNamed(loadProfessionalsSections, "CxoEarning");
+const CxoHowWeHelp = lazyNamed(loadProfessionalsSections, "CxoHowWeHelp");
+const CxoSoundingBoard = lazyNamed(loadProfessionalsSections, "CxoSoundingBoard");
+const CxoFreedom = lazyNamed(loadProfessionalsSections, "CxoFreedom");
+const CxoDeliverables = lazyNamed(loadProfessionalsSections, "CxoDeliverables");
+const CxoWhyChoose = lazyNamed(loadProfessionalsSections, "CxoWhyChoose");
+const CxoHowWeWork = lazyNamed(loadProfessionalsSections, "CxoHowWeWork");
+const CxoStories = lazyNamed(loadProfessionalsSections, "CxoStories");
+const CxoFaqsClosing = lazyNamed(loadProfessionalsSections, "CxoFaqsClosing");
 
-import { MaterialInfoBody, SebiCodeBody } from "./sections/MaterialCodeSections";
-import { InvestorCharterBody } from "./sections/InvestorCharterSections";
-import { GrievanceBody, IaFunctionsBody } from "./sections/GrievanceFunctionsSections";
-import { CfaCodeBody } from "./sections/CfaCodeSections";
-import {
-  InsightsBanner,
-  InsightsBlogs,
-  InsightsBooks,
-  InsightsConnect,
-  InsightsMedia,
-  InsightsTv,
-  InsightsYoutube,
-} from "./sections/InsightsSections";
+const loadMaterialCodeSections = () => import("./sections/MaterialCodeSections");
+const MaterialInfoBody = lazyNamed(loadMaterialCodeSections, "MaterialInfoBody");
+const SebiCodeBody = lazyNamed(loadMaterialCodeSections, "SebiCodeBody");
+const loadInvestorCharterSections = () => import("./sections/InvestorCharterSections");
+const InvestorCharterBody = lazyNamed(loadInvestorCharterSections, "InvestorCharterBody");
+const loadGrievanceFunctionsSections = () => import("./sections/GrievanceFunctionsSections");
+const GrievanceBody = lazyNamed(loadGrievanceFunctionsSections, "GrievanceBody");
+const IaFunctionsBody = lazyNamed(loadGrievanceFunctionsSections, "IaFunctionsBody");
+const loadCfaCodeSections = () => import("./sections/CfaCodeSections");
+const CfaCodeBody = lazyNamed(loadCfaCodeSections, "CfaCodeBody");
+const loadInsightsSections = () => import("./sections/InsightsSections");
+const InsightsBanner = lazyNamed(loadInsightsSections, "InsightsBanner");
+const InsightsBlogs = lazyNamed(loadInsightsSections, "InsightsBlogs");
+const InsightsBooks = lazyNamed(loadInsightsSections, "InsightsBooks");
+const InsightsConnect = lazyNamed(loadInsightsSections, "InsightsConnect");
+const InsightsMedia = lazyNamed(loadInsightsSections, "InsightsMedia");
+const InsightsTv = lazyNamed(loadInsightsSections, "InsightsTv");
+const InsightsYoutube = lazyNamed(loadInsightsSections, "InsightsYoutube");
 
 const SECTION_COMPONENTS = {
   hero: Hero,
@@ -324,6 +327,12 @@ class SectionBoundary extends Component {
 }
 
 export default function CmsSections({ sections }) {
+  // One boundary for the whole page: sections whose design is still loading appear together. The
+  // placeholder sits under the floating header like the page banners do, so nothing jumps on arrival.
+  return <Suspense fallback={<div className="-mt-[var(--header-clearance,4.875rem)] min-h-screen" aria-busy="true" />}>{renderSections(sections)}</Suspense>;
+}
+
+function renderSections(sections) {
   return visibleItems(sections).map((section) => {
     const Section = SECTION_COMPONENTS[section.type];
     if (!Section) return null;

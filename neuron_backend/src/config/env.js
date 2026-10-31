@@ -1,5 +1,8 @@
 require("dotenv").config();
 const path = require("path");
+const { randomBytes } = require("crypto");
+
+const isProduction = (process.env.NODE_ENV || "development") === "production";
 
 function list(value, fallback) {
   return String(value || fallback)
@@ -11,13 +14,17 @@ function list(value, fallback) {
 const env = {
   nodeEnv: process.env.NODE_ENV || "development",
   port: Number(process.env.PORT) || 5000,
+  // Proxies in front of the API (hosting load balancer). Needed so rate limits see each visitor IP.
+  trustProxy: process.env.TRUST_PROXY !== undefined ? Number(process.env.TRUST_PROXY) || process.env.TRUST_PROXY : isProduction ? 1 : 0,
   corsOrigins: list(process.env.CORS_ORIGIN, "http://localhost:3001,http://localhost:3000"),
   mongoUri: process.env.MONGO_URI || process.env.MONGODB_URI || "",
   dataDir: process.env.DATA_DIR || path.join(__dirname, "..", "..", "data"),
   uploadsDir: process.env.UPLOADS_DIR || path.join(__dirname, "..", "..", "uploads"),
 
   jwt: {
-    secret: process.env.JWT_SECRET || "default_jwt_secret",
+    // Never a fixed fallback: production refuses to start without it (below); development gets a
+    // random secret per run, so tokens simply expire on restart.
+    secret: process.env.JWT_SECRET || randomBytes(32).toString("hex"),
     expiresIn: "8h",
   },
 
@@ -29,7 +36,7 @@ const env = {
   },
 
   recovery: {
-    email: String(process.env.ADMIN_RECOVERY_EMAIL || process.env.ADMIN_EMAIL || "kaushikluhar65@gmail.com").trim().toLowerCase(),
+    email: String(process.env.ADMIN_RECOVERY_EMAIL || process.env.ADMIN_EMAIL || "").trim().toLowerCase(),
     appUrl: String(process.env.ADMIN_APP_URL || "http://localhost:3001").replace(/\/$/, ""),
     tokenTtlMinutes: 30,
   },
@@ -48,7 +55,11 @@ const env = {
 };
 
 if (!process.env.JWT_SECRET) {
-  console.warn("[Config] JWT_SECRET is not set. Using an insecure default secret.");
+  if (isProduction) throw new Error("[Config] JWT_SECRET must be set in production.");
+  console.warn("[Config] JWT_SECRET is not set. Using a random development secret (sessions end on restart).");
+}
+if (!env.recovery.email) {
+  console.warn("[Config] ADMIN_RECOVERY_EMAIL / ADMIN_EMAIL is not set, so recovery and notification emails have no inbox.");
 }
 
 module.exports = env;

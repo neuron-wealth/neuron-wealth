@@ -2,6 +2,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight, Eye, X } from "lucide-react";
 import { sectionDesign } from "../design";
 import { useIsMobile } from "../../../hooks/useMediaQuery";
+import { useModal } from "../../../hooks/useModal";
+
+const NO_INERT = [];
 import { CmsLink, FOCUS, Reveal, SectionHead, hasImage, hasLink, imageStyle, strings, visibleItems } from "../primitives";
 
 const SIDE_ARROW =
@@ -109,11 +112,11 @@ function MemberCard({ person, onSelect }) {
         <button
           type="button"
           onClick={() => onSelect(person)}
-          aria-label={`View profile of ${person.name}`}
+          aria-label={`View Profile: ${person.name}`}
           className={`group/flip block h-full w-full cursor-pointer rounded-full [perspective:1000px] ${FOCUS}`}
         >
           <span className="relative block h-full w-full rounded-full transition-transform duration-700 ease-[cubic-bezier(0.4,0.2,0.2,1)] [transform-style:preserve-3d] group-hover/flip:[transform:rotateY(180deg)] group-focus-visible/flip:[transform:rotateY(180deg)] motion-reduce:transition-none">
-            <span className={`${FACE} bg-gradient-to-br from-[#0B1E30] via-[#15344F] to-[#21649A]`}>
+            <span aria-hidden="true" className={`${FACE} bg-gradient-to-br from-[#0B1E30] via-[#15344F] to-[#21649A]`}>
               {hasPhoto ? (
                 <img
                   src={person.image.url}
@@ -128,6 +131,7 @@ function MemberCard({ person, onSelect }) {
               )}
             </span>
             <span
+              aria-hidden="true"
               className={`${FACE} flex flex-col items-center justify-center gap-2.5 bg-gradient-to-br from-[#15344F] via-[#1b4a6e] to-[#21649A] px-6 text-white [transform:rotateY(180deg)]`}
             >
               <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#54B848] text-white shadow-md">
@@ -148,18 +152,10 @@ function MemberCard({ person, onSelect }) {
 }
 
 function MemberModal({ member, teamLink, onClose }) {
-  useEffect(() => {
-    function onKeyDown(event) {
-      if (event.key === "Escape") onClose();
-    }
-    window.addEventListener("keydown", onKeyDown);
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      window.removeEventListener("keydown", onKeyDown);
-      document.body.style.overflow = previous;
-    };
-  }, [onClose]);
+  const panelRef = useRef(null);
+  // The circle that opened the profile gets focus back when it closes.
+  const returnFocusRef = useRef(typeof document !== "undefined" ? document.activeElement : null);
+  useModal({ open: true, onClose, panelRef, returnFocusRef, inertIds: NO_INERT });
 
   const paragraphs = strings(member.fullBio).length
     ? strings(member.fullBio)
@@ -167,7 +163,7 @@ function MemberModal({ member, teamLink, onClose }) {
   const credentials = strings(member.credentials);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6" role="dialog" aria-modal="true" aria-labelledby="member-modal-title">
+    <div ref={panelRef} className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6" role="dialog" aria-modal="true" aria-labelledby="member-modal-title">
       <div className="fixed inset-0 bg-[#07131F]/80 backdrop-blur-md transition-opacity duration-300" onClick={onClose} />
       <div className="relative z-10 flex max-h-[88vh] w-full max-w-2xl flex-col overflow-hidden rounded-3xl border border-[#DCE4E8] bg-white shadow-[0_25px_70px_rgba(16,42,64,0.35)] transition-all duration-300 dark:border-white/10 dark:bg-[#0B1E30]">
         <div className="h-2 w-full bg-gradient-to-r from-[#21649A] via-[#54B848] to-[#8FCB86]" />
@@ -255,6 +251,7 @@ export default function Team({ id, content, design, root }) {
   const look = sectionDesign(design, { background: "white", spacing: "py-16 sm:py-20 lg:py-24" });
   const members = visibleItems(content.members);
   const [selected, setSelected] = useState(null);
+  const closeProfile = useCallback(() => setSelected(null), []);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [totalDots, setTotalDots] = useState(0);
@@ -364,6 +361,9 @@ export default function Team({ id, content, design, root }) {
 
               <div
                 ref={scrollRef}
+                tabIndex={0}
+                role="region"
+                aria-label="Team members, scroll sideways"
                 className="flex snap-x snap-mandatory items-stretch gap-6 overflow-x-auto scroll-smooth pb-4 pt-2 [scrollbar-width:none] sm:snap-none [&::-webkit-scrollbar]:hidden"
                 style={isMobile ? undefined : edgeMask(canScrollLeft, canScrollRight)}
               >
@@ -397,7 +397,7 @@ export default function Team({ id, content, design, root }) {
                     aria-label={`Go to slide ${idx + 1}`}
                     aria-current={idx === activeDot ? "true" : undefined}
                     onClick={() => scrollToDot(idx)}
-                    className={`h-2.5 rounded-full transition-all duration-300 ${
+                    className={`relative h-2.5 rounded-full transition-all duration-300 before:absolute before:-inset-y-[7px] before:-inset-x-[4px] before:content-[''] ${
                       idx === activeDot
                         ? "w-8 bg-[#54B848]"
                         : "w-2.5 bg-[#DCE4E8] hover:bg-[#21649A]/40 dark:bg-white/20 dark:hover:bg-white/40"
@@ -413,7 +413,7 @@ export default function Team({ id, content, design, root }) {
           </>
         ) : null}
 
-        {selected ? <MemberModal member={selected} teamLink={content.button} onClose={() => setSelected(null)} /> : null}
+        {selected ? <MemberModal member={selected} teamLink={content.button} onClose={closeProfile} /> : null}
       </div>
     </section>
   );
