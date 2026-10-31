@@ -29,6 +29,7 @@ app.use(
       const normalized = origin.replace(/\/$/, "");
       const allowed =
         env.corsOrigins.includes(normalized) ||
+        /^https?:\/\/([a-z0-9-]+\.)?neuronwealth\.com$/.test(normalized) ||
         (env.nodeEnv !== "production" && /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(normalized));
       return callback(null, allowed);
     },
