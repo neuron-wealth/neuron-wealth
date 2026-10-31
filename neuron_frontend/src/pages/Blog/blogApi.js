@@ -5,9 +5,11 @@ const cache = new Map();
 
 async function getJson(url) {
   const response = await fetch(url, { headers: { Accept: "application/json" } });
-  const data = await response.json().catch(() => null);
-  if (!response.ok) {
-    const error = new Error(data?.message || "Request failed.");
+  const contentType = response.headers.get("content-type") || "";
+  const isJson = contentType.includes("application/json");
+  const data = isJson ? await response.json().catch(() => null) : null;
+  if (!response.ok || !data) {
+    const error = new Error(data?.message || "Failed to load blog data.");
     error.status = response.status;
     throw error;
   }
