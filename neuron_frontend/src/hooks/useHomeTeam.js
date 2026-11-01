@@ -1,5 +1,16 @@
 import { usePage } from "./usePage";
-import { strings } from "../components/cms/primitives";
+import { pageDefaults } from "../config/pageDefaults";
+import { strings, visibleItems } from "../components/cms/primitives";
+
+/** Fixed mentor profiles (Dr. Hamsa Thota) shown in Team › Leadership & Mentorship; not editable in the admin. */
+export const MENTORS = visibleItems(
+  pageDefaults.team?.sections?.find((entry) => entry.type === "leadership")?.content?.mentors
+);
+
+const nameKey = (name) => String(name || "").trim().toLowerCase();
+export const isSameName = (a, b) => Boolean(nameKey(a)) && nameKey(a) === nameKey(b);
+const MENTOR_NAMES = new Set(MENTORS.map((mentor) => nameKey(mentor.name)));
+export const isMentor = (name) => MENTOR_NAMES.has(nameKey(name));
 
 /**
  * Home › Team Showcase is the single place people are edited. The Team page and the

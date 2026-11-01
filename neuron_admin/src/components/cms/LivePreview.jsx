@@ -47,6 +47,8 @@ export default function LivePreview({ page, settings, path = "/", focus, onSelec
   const [theme, setTheme] = useState("light");
   const [session, setSession] = useState(0);
   const [frameKey, setFrameKey] = useState(0);
+  // A fresh URL per load so the browser never shows a cached copy of the website from before a deploy.
+  const [openedAt] = useState(() => Date.now());
   const [slow, setSlow] = useState(false);
   const [box, setBox] = useState({ width: 0, height: 0 });
 
@@ -159,7 +161,7 @@ export default function LivePreview({ page, settings, path = "/", focus, onSelec
           <iframe
             key={frameKey}
             ref={frameRef}
-            src={siteUrl("/cms-preview")}
+            src={siteUrl(`/cms-preview?v=${openedAt}-${frameKey}`)}
             title="Website preview"
             className="absolute top-0 border-0 bg-white shadow-[0_0_0_1px_var(--line)]"
             style={{

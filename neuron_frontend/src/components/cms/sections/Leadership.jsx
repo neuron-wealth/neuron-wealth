@@ -1,6 +1,6 @@
 import { CheckCircle2 } from "lucide-react";
-import { visibleItems, strings } from "../primitives";
-import { useHomeLeader } from "../../../hooks/useHomeTeam";
+import { strings, visibleItems, hasImage } from "../primitives";
+import { useHomeLeader, useHomeTeam, isSameName, MENTORS } from "../../../hooks/useHomeTeam";
 
 export default function Leadership({ id, content, design, root }) {
   const eyebrow = content.eyebrow || "Institutional Stewardship";
@@ -9,11 +9,17 @@ export default function Leadership({ id, content, design, root }) {
     content.text ||
     "Pioneering patented global innovation, corporate engineering, and cross-border fiduciary wealth stewardship.";
 
-  // The Principal Officer is edited in Home › Team Showcase; the mentor profile is fixed.
+  // The Principal Officer is edited in Home › Team Showcase. Mentor text is fixed, but
+  // their photo follows their Home › Team Showcase card when it has one.
   const principal = useHomeLeader();
+  const homeMembers = visibleItems(useHomeTeam().members);
+  const mentors = MENTORS.map((mentor) => {
+    const homeCard = homeMembers.find((member) => isSameName(member.name, mentor.name));
+    return hasImage(homeCard?.image) ? { ...mentor, image: { ...homeCard.image, alt: homeCard.image.alt || mentor.name } } : mentor;
+  });
   const leaders = [
     ...(principal.name ? [{ id: "principal", ...principal, badge: "Fiduciary Leadership" }] : []),
-    ...visibleItems(content.mentors),
+    ...mentors,
   ];
 
   return (
