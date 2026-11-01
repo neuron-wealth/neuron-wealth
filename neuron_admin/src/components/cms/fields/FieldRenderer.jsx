@@ -148,6 +148,9 @@ export function FieldRenderer({ field, value, onChange }) {
       return <TableField field={field} value={value} onChange={onChange} />;
     case "list":
       return <ListField field={field} value={value} onChange={onChange} />;
+    case "note":
+      // Read-only guidance; holds no content of its own.
+      return <p className="muted rounded-xl border border-dashed border-line bg-subtle p-4 text-xs leading-relaxed">{field.label}</p>;
     default:
       return null;
   }

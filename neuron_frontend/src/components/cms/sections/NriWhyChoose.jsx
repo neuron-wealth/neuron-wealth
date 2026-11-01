@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { CmsIcon, visibleItems } from "../primitives";
 import { useReducedMotion } from "../../../hooks/useReducedMotion";
+import { useHomeLeader } from "../../../hooks/useHomeTeam";
 import { cx } from "../../../utils/cx";
 
 const H2_SIZE = "font-display text-[2.5rem] font-medium leading-[1.05] tracking-tight sm:text-[3rem]";
@@ -19,8 +20,10 @@ export default function NriWhyChoose({ content, section }) {
   const whyLine = useTransform(whyProgress, [0, 1], [0, 1]);
 
   const heading = content?.heading || "One Trusted Adviser for Both Sides of Your Life";
-  const founderImageUrl = content?.founderImage?.url || "/images/team/jigar-patel.jpg";
-  const founderImageAlt = content?.founderImage?.alt || "Mr. Jigar Patel";
+  // The founder photo is edited in Home › Team Showcase › Featured Leader.
+  const leader = useHomeLeader();
+  const founderImageUrl = leader.image?.url || "/images/team/jigar-patel.jpg";
+  const founderImageAlt = leader.image?.alt || leader.name || "Mr. Jigar Patel";
   const leadCardNum = content?.leadCardNum || "01";
   const leadCardTitle = content?.leadCardTitle || "We have lived it.";
   const leadCardText = content?.leadCardText || "Our founder returned from the USA himself.";

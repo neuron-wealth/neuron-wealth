@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { visibleItems } from "../primitives";
+import { useHomeLeader } from "../../../hooks/useHomeTeam";
 
 const FOCUS =
   "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#21649A]";
@@ -9,10 +10,13 @@ const H2_SIZE = "font-display text-[2.5rem] font-medium leading-[1.05] tracking-
 
 export default function NriFounderStory({ content, section }) {
   const [failed, setFailed] = useState(false);
-  const founderImageUrl = content?.founderImage?.url || "/images/team/jigar-patel.jpg";
-  const founderImageAlt = content?.founderImage?.alt || "Mr. Jigar Patel, Founder and Principal Officer";
-  const founderName = content?.founderName || "Mr. Jigar Patel";
-  const founderRole = content?.founderRole || "Founder & Principal Officer";
+  // Photo, name and role are edited in Home › Team Showcase › Featured Leader.
+  const leader = useHomeLeader();
+  const founderName = leader.name || "Mr. Jigar Patel";
+  const founderRole = leader.role || "Founder & Principal Officer";
+  const founderImageUrl = leader.image?.url || "/images/team/jigar-patel.jpg";
+  const founderImageAlt = leader.image?.alt || founderName;
+  const founderInitials = leader.monogram || "JP";
   const heading = content?.heading || "We Have Made This Journey Ourselves";
   const paragraphs = content?.paragraphs || [];
   const credentials = visibleItems(content?.credentials || []);
@@ -35,7 +39,7 @@ export default function NriFounderStory({ content, section }) {
           <div className="relative h-44 w-44 overflow-hidden rounded-full border-4 border-white/20 shadow-2xl ring-2 ring-[#54B848]/50 sm:h-52 sm:w-52 lg:h-56 lg:w-56">
             {failed ? (
               <span className="grid h-full w-full place-items-center font-display text-[5rem] font-medium text-white/90">
-                JP
+                {founderInitials}
               </span>
             ) : (
               <img

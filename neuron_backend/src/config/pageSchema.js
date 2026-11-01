@@ -304,6 +304,12 @@ const toggle = (key, label, extra = {}) => ({ key, label, kind: "toggle", ...ext
 const select = (key, label, options, extra = {}) => ({ key, label, kind: "select", options, ...extra });
 const table = (key, label, extra = {}) => ({ key, label, kind: "table", ...extra });
 const list = (key, label, itemLabel, max, fields, extra = {}) => ({ key, label, kind: "list", itemLabel, max, fields, ...extra });
+const note = (key, label) => ({ key, label, kind: "note" });
+
+const TEAM_PAGE_NOTE =
+  "Team members come from Home page › Team Showcase and appear here in the same order. Add, remove, hide or reorder them there and the Team page updates automatically.";
+
+const FOUNDER_NOTE = "The founder's photo, name and role come from Home page › Team Showcase › Featured Leader.";
 
 const CARD_LINK_HINT = "Leave the label empty to make the whole card clickable without a text link.";
 const emptyImage = () => ({ url: "", alt: "", width: 0, height: 0, fit: "", position: "" });
@@ -482,7 +488,7 @@ const SECTION_TYPES = {
   },
   team: {
     label: "Team Showcase",
-    description: "Featured leader with quote plus an auto-scrolling team carousel with profiles.",
+    description: "Featured leader with quote plus an auto-scrolling team carousel with profiles. Also feeds the Team page and the founder photo on service pages.",
     icon: "UsersRound",
     design: ["background", "backgroundColor", "spacing", "anchor"],
     fields: [
@@ -494,7 +500,14 @@ const SECTION_TYPES = {
       text("leaderInitials", "Initials (Shown if No Photo)", 4, { group: "Featured Leader" }),
       tags("leaderCredentials", "Credentials", 8, 40, { group: "Featured Leader" }),
       textarea("leaderBio", "Short Bio", 800, { group: "Featured Leader" }),
-      image("leaderImage", "Photo", { group: "Featured Leader", hint: "Portrait (4:5) works best. Height and width are optional." }),
+      paragraphs("leaderFullBio", "Full Bio (Team Page)", 8, 1500, {
+        group: "Featured Leader",
+        hint: "Shown on the Team page › Leadership & Mentorship. Leave empty to use the Short Bio.",
+      }),
+      image("leaderImage", "Photo", {
+        group: "Featured Leader",
+        hint: "Portrait (4:5) works best. Also used on the Team page and the NRI Returning to India page.",
+      }),
       text("eyebrow", "Eyebrow", 60, { group: "Team Carousel" }),
       text("title", "Heading", 100, { group: "Team Carousel" }),
       link("button", "Button", { group: "Team Carousel" }),
@@ -511,7 +524,7 @@ const SECTION_TYPES = {
           text("highlight", "Highlight Badge", 60),
           tags("credentials", "Credentials", 8, 60),
           textarea("bio", "Short Bio (Card)", 300),
-          paragraphs("fullBio", "Full Profile Paragraphs (Pop-up)", 8, 1500),
+          paragraphs("fullBio", "Full Profile Paragraphs (Pop-up & Team Page)", 8, 1500),
           image("image", "Photo", { hint: "Optional. Height sets the card photo height." }),
         ],
         { titleKey: "name", group: "Team Carousel" }
@@ -799,68 +812,29 @@ const SECTION_TYPES = {
   },
   leadership: {
     label: "Leadership & Mentorship",
-    description: "Keynote leader and mentor profiles with alternating photo layout, credentials, and full biographies.",
+    description: "Principal Officer (from Home › Team Showcase › Featured Leader) and mentor profiles with alternating photo layout.",
     icon: "Award",
     design: ["background", "backgroundColor", "spacing", "anchor"],
     fields: [
       text("eyebrow", "Eyebrow", 60),
       text("title", "Heading", 80),
       textarea("text", "Intro Description", 400),
-      list(
-        "leaders",
-        "Leaders & Mentors",
-        "Leader",
-        6,
-        [
-          text("name", "Name", 80),
-          text("role", "Role / Title", 100),
-          tags("credentials", "Credentials Pills", 8, 60),
-          text("monogram", "Monogram Initials (e.g. JP)", 4),
-          image("image", "Portrait Photo", { sizing: false }),
-          paragraphs("bio", "Biography Paragraphs", 8, 1500),
-          text("badge", "Footer Badge", 60),
-        ],
-        { titleKey: "name" }
+      note(
+        "leadersNote",
+        "The Principal Officer's photo, name, role, credentials and bio come from Home page › Team Showcase › Featured Leader. The mentor profile is fixed."
       ),
     ],
   },
   teamEcosystem: {
     label: "Team Members Ecosystem",
-    description: "Interactive team members showcase with spotlight rolling view, View All grid, and department filters.",
+    description: "Every Home › Team Showcase member, in the same order, with credentials and full profile.",
     icon: "Users",
     design: ["background", "backgroundColor", "spacing", "anchor"],
     fields: [
       text("eyebrow", "Eyebrow", 60),
       text("title", "Heading", 80),
       textarea("text", "Intro Description", 400),
-      list(
-        "departments",
-        "Departments",
-        "Department",
-        8,
-        [
-          text("deptId", "Department ID (e.g. advisory-taxation)", 40),
-          text("eyebrow", "Category Eyebrow", 60),
-          text("title", "Department Title", 80),
-          textarea("desc", "Department Description", 300),
-        ],
-        { titleKey: "title" }
-      ),
-      list(
-        "members",
-        "Team Members",
-        "Member",
-        40,
-        [
-          text("name", "Name", 80),
-          text("role", "Role / Designation", 100),
-          text("deptId", "Department ID (matches Department ID above)", 40),
-          tags("credentials", "Credentials Pills", 8, 60),
-          text("monogram", "Monogram Initials (e.g. MP)", 4),
-          paragraphs("bio", "Biography Paragraphs", 8, 1500),
-        ],
-        { titleKey: "name" }
-      ),
+      note("membersNote", TEAM_PAGE_NOTE),
     ],
   },
   teamDisclaimer: {
@@ -1398,9 +1372,7 @@ const SECTION_TYPES = {
     icon: "Award",
     design: ["background", "backgroundColor", "spacing", "anchor"],
     fields: [
-      image("founderImage", "Founder Portrait"),
-      text("founderName", "Founder Name", 60),
-      text("founderRole", "Founder Role / Designation", 80),
+      note("founderNote", FOUNDER_NOTE),
       text("heading", "Heading", 120),
       paragraphs("paragraphs", "Journey Paragraphs", 6, 800),
       list("credentials", "Professional Credentials", "Credential", 6, [
@@ -1530,7 +1502,7 @@ const SECTION_TYPES = {
     design: ["background", "backgroundColor", "spacing", "anchor"],
     fields: [
       text("heading", "Section Heading", 120),
-      image("founderImage", "Founder Photo"),
+      note("founderNote", FOUNDER_NOTE),
       text("leadCardNum", "Lead Card Number", 10),
       text("leadCardTitle", "Lead Card Title", 80),
       textarea("leadCardText", "Lead Card Text", 300),

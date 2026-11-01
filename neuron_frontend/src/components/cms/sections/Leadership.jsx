@@ -1,5 +1,6 @@
 import { CheckCircle2 } from "lucide-react";
 import { visibleItems, strings } from "../primitives";
+import { useHomeLeader } from "../../../hooks/useHomeTeam";
 
 export default function Leadership({ id, content, design, root }) {
   const eyebrow = content.eyebrow || "Institutional Stewardship";
@@ -8,7 +9,12 @@ export default function Leadership({ id, content, design, root }) {
     content.text ||
     "Pioneering patented global innovation, corporate engineering, and cross-border fiduciary wealth stewardship.";
 
-  const leaders = visibleItems(content.leaders);
+  // The Principal Officer is edited in Home › Team Showcase; the mentor profile is fixed.
+  const principal = useHomeLeader();
+  const leaders = [
+    ...(principal.name ? [{ id: "principal", ...principal, badge: "Fiduciary Leadership" }] : []),
+    ...visibleItems(content.mentors),
+  ];
 
   return (
     <section

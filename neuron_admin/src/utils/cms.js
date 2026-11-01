@@ -70,7 +70,7 @@ export function newSection(type, designDefaults) {
   });
 }
 
-export const WIDE_KINDS = new Set(["textarea", "link", "image", "tags", "paragraphs", "table", "list"]);
+export const WIDE_KINDS = new Set(["textarea", "link", "image", "tags", "paragraphs", "table", "list", "note"]);
 
 const SAFE_HREF = /^(\/(?!\/)|#|https?:\/\/[^\s/$.?#].[^\s]*$|mailto:[^\s@]+@[^\s@]+\.[^\s@]+|tel:\+?[0-9\s-]{6,20}$)/i;
 export const isSafeHref = (href) => !href || SAFE_HREF.test(href.trim());

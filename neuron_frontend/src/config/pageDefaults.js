@@ -278,6 +278,12 @@ const home = {
       leaderCredentials: ["CA (India)", "CFA Charterholder (USA)", "CPA (USA)", "MBA-Finance (USA)", "20+ Years Exp"],
       leaderBio:
         "Mr. Jigar Patel is the founder and Principal Officer of Neuron Wealth Advisors LLP, a SEBI-registered fee-only investment advisor. He holds a Chartered Accountancy from India, a CFA Charter from CFA Institute USA, a CPA, and an MBA-Finance from the University of Illinois, Chicago. With over 20 years of experience spanning India and the USA, he advises high-net-worth individuals, NRI families, founders, and global citizens on wealth creation, cross-border tax planning, and multi-generational wealth strategy.",
+      leaderFullBio: [
+        "Mr. Jigar Patel is a Chartered Accountant from India, CFA Charterholder from CFA Institute, USA as well as CPA and MBA-Finance from USA.",
+        "With 20+ years of experience, he has developed ingenuity for Simplifying Financial Life and established himself as a trusted adviser for multi-generational wealth management. He helps clients make informed decisions for protecting, complying, creating, accumulating, preserving, utilizing, distributing and enjoying wealth.",
+        "Jigar has been invited by Microsoft, Google in the USA as well as various other places for giving presentations on Investments, taxation and global compliance. His book on NRI Investments and Taxation is published on Amazon.com and his articles have been published in magazines in India and in the USA. He has organized webinars, shares his views on TV and has been writing blogs and replying to questions on blog and quora.",
+        "He has been a mentor at the EDI for students and startups since 2015 and a volunteer for CFA Society India since 2012. Personally, Jigar loves traveling and adventure sports, having done bungee jumping and skydiving.",
+      ],
       leaderImage: img("/images/team/jigar-patel.jpg", "Mr. Jigar Patel"),
       eyebrow: "Our Team",
       title: "The people behind the advice",
@@ -801,21 +807,8 @@ const team = {
         title: "Leadership & Mentorship",
         text:
           "Pioneering patented global innovation, corporate engineering, and cross-border fiduciary wealth stewardship.",
-        leaders: items("leader", [
-          {
-            name: "Mr. Jigar Patel",
-            role: "Principal Officer & Investment Advisor",
-            credentials: ["CA (India)", "CFA Charterholder (USA)", "CPA (USA)", "MBA-Finance (USA)", "20+ Years Exp"],
-            monogram: "JP",
-            image: img("/images/team/jigar-patel.jpg", "Mr. Jigar Patel"),
-            bio: [
-              "Mr. Jigar Patel is a Chartered Accountant from India, CFA Charterholder from CFA Institute, USA as well as CPA and MBA-Finance from USA.",
-              "With 20+ years of experience, he has developed ingenuity for Simplifying Financial Life and established himself as a trusted adviser for multi-generational wealth management. He helps clients make informed decisions for protecting, complying, creating, accumulating, preserving, utilizing, distributing and enjoying wealth.",
-              "Jigar has been invited by Microsoft, Google in the USA as well as various other places for giving presentations on Investments, taxation and global compliance. His book on NRI Investments and Taxation is published on Amazon.com and his articles have been published in magazines in India and in the USA. He has organized webinars, shares his views on TV and has been writing blogs and replying to questions on blog and quora.",
-              "He has been a mentor at the EDI for students and startups since 2015 and a volunteer for CFA Society India since 2012. Personally, Jigar loves traveling and adventure sports, having done bungee jumping and skydiving.",
-            ],
-            badge: "Fiduciary Leadership",
-          },
+        // Fixed mentor profile; not editable in the admin. The Principal Officer comes from Home › Team Showcase.
+        mentors: items("mentor", [
           {
             name: "Dr. Hamsa Thota",
             role: "Mentor",
@@ -843,140 +836,6 @@ const team = {
         title: "Team Members",
         text:
           "Specialized private equity structuring, income tax audit experts, SEBI compliance, and mission-critical digital architects.",
-        departments: items("dept", [
-          {
-            deptId: "advisory-taxation",
-            eyebrow: "Specialized Advisory",
-            title: "PE/VC, Taxation & Wealth Protection",
-            desc:
-              "Private equity structuring, cross-border DTAA taxation, income tax compliance, and multi-generational risk mitigation.",
-          },
-          {
-            deptId: "operations-governance",
-            eyebrow: "Firm Operations & Governance",
-            title: "Compliance, Operations & Administration",
-            desc:
-              "SEBI regulatory oversight, back-office excellence, operational precision, and seamless client servicing.",
-          },
-          {
-            deptId: "technology-partners",
-            eyebrow: "Infrastructure & Technology",
-            title: "Technology & Strategic Partners",
-            desc:
-              "Mission-critical hardware security, cyber infrastructure, e-commerce, and high-availability digital platforms.",
-          },
-        ]),
-        members: items("member", [
-          {
-            name: "Mayank Patel",
-            role: "PE/VC/Startup Executive",
-            deptId: "advisory-taxation",
-            credentials: ["Electrical Engineer", "MBA (Finance)", "CFA Charterholder (USA)", "20+ Years Exp"],
-            monogram: "MP",
-            bio: [
-              "Mayank has more than twenty years of experience of working in technology business incubation, academics and banking & financial services sector. He is an Electrical Engineer, MBA (Finance) and a CFA Charterholder from CFA Institute, USA.",
-              "Mayank provides consulting for evaluation of start ups and for PE, VC and Startup Investments. He has been a CEO of EDII's technology business incubator, CrAdLE and mentored start-up for strategic financing, and business valuation. He has valued more than 100 small and medium enterprises for investment, especially for venture capital and private equity funding.",
-              "As a professor at various education institutions, he has taught students in various finance and investment management subjects including investment analysis, portfolio management, asset valuation, new enterprise financing, international finance and alternative investment.",
-            ],
-          },
-          {
-            name: "Reecha Patel",
-            role: "CA, CPA, Taxation Executive",
-            deptId: "advisory-taxation",
-            credentials: ["FCA (ICAI)", "CPA (USA)", "DISA (ICAI)", "M.Com", "15+ Years Exp"],
-            monogram: "RP",
-            bio: [
-              "Reecha has been practicing with more than 15 years of experience in taxation. She is a Fellow member of the Institute of Chartered Accountant of India (FCA) and also passed the Uniform CPA examination from the USA. Additionally, she has a Diploma in Information Systems Audit (DISA) from the ICAI and is a Master of Commerce with Accounting and Statistics from Gujarat University.",
-              "Reecha has extensive experience in preparation and review of India and US Income tax returns. She has also volunteered in the Volunteers Income Tax Assistance (VITA) program of IRS when she was in the USA from 2006-2009.",
-            ],
-          },
-          {
-            name: "Sajan Rathod",
-            role: "CA, Income Tax Executive",
-            deptId: "advisory-taxation",
-            credentials: ["CA (ICAI)", "M.Com", "10+ Years Exp", "DTAA Specialist"],
-            monogram: "SR",
-            bio: [
-              "Sajan has over 10 years of experience in dealing with income tax matter including income tax returns, income tax audits, claiming DTAA reliefs, reporting of foreign assets, liaison with IT department, replying to IT notices, assessments, appeal, etc.",
-              "Sajan is a Chartered Accountant from the Institute of Chartered Accountants of India (ICAI) and Master of Commerce with Accounting and Statistics from Gujarat University.",
-            ],
-          },
-          {
-            name: "Chandrasheel Mehta",
-            role: "Insurance Executive",
-            deptId: "advisory-taxation",
-            credentials: ["IRDA Registered Since 2004", "20+ Years Exp", "3rd Generation Specialist"],
-            monogram: "CM",
-            bio: [
-              "Chandrasheel has been an Insurance specialist for more than 20 years. He has been registered with IRDA as an Insurance Adviser since 2004.",
-              "Chandrasheel provides consulting for wealth protecting strategies through insurance for protecting family lives and various personal and corporate properties, assets and income.",
-              "Chandrasheel is the third generation specialist in the insurance business as the Mehta family has been in the insurance business for the last 70+ years. His grandfather had his own Life Insurance Company before nationalization of insurance companies by the Government of India.",
-            ],
-          },
-          {
-            name: "Ruchita Thakore",
-            role: "Relationship Manager & Compliance Officer",
-            deptId: "operations-governance",
-            credentials: ["MBA-Finance", "NISM X-A / X-B", "NISM X-C", "Compliance Officer", "5+ Years Exp"],
-            monogram: "RT",
-            bio: [
-              "Ruchita is an MBA-Finance from KS School of Business Management and has 5+ years of experience in finance and investments.",
-              "She is the Person Associated with Investment Advice as she has both the NISM X-A, X-B exams and the renewal NISM X-C for Investment Advisors. Ruchita is the Compliance Officer of the firm.",
-            ],
-          },
-          {
-            name: "Zeel Raval",
-            role: "Wealth Executive",
-            deptId: "operations-governance",
-            credentials: ["MBA-Finance (Silver Oak Univ)", "Advisory Support", "Back Office Systems"],
-            monogram: "ZR",
-            bio: [
-              "Zeel is an MBA-Finance from Silver Oak University in Ahmedabad and has about 1 years of experience in finance and investments.",
-              "She provides supports for the investment advisory services and back office work.",
-            ],
-          },
-          {
-            name: "Yash Desai",
-            role: "Operations Executive",
-            deptId: "operations-governance",
-            credentials: ["BBA (Gujarat Univ)", "5+ Years Operations", "Client Servicing"],
-            monogram: "YD",
-            bio: [
-              "Yash has over 5 years of experience in investment operations, processes and client servicing. He also keeps good contacts with various stakeholders and ensures timely completion of tasks and ensures quality service to the clients.",
-              "Yash has completed the Bachelor of Business Administration from Gujarat University.",
-            ],
-          },
-          {
-            name: "Jyotika Desai",
-            role: "Partner - Admin",
-            deptId: "operations-governance",
-            credentials: ["LLP Partner", "Corporate Administration"],
-            monogram: "JD",
-            bio: [
-              "Jyotika is a partner of Neuron Wealth Advisors LLP. She is not involved for any investment advisory related work but is involved only for the administration related work.",
-            ],
-          },
-          {
-            name: "Sunil Shah",
-            role: "Founder, Lynx Computers, IT Infrastructure",
-            deptId: "technology-partners",
-            credentials: ["Founder Lynx Computers", "35+ Years R&D", "Hardware Architecture"],
-            monogram: "SS",
-            bio: [
-              "Sunil is founder of Lynx Computers and has 35+ years of experience in research and development of computer hardware, production and maintenance in the area of computer hardware and its architecture.",
-            ],
-          },
-          {
-            name: "Chirag Darji",
-            role: "CTO, Variance Infotech, Website and E-commerce",
-            deptId: "technology-partners",
-            credentials: ["CTO Variance Infotech", "20+ Years Exp", "Web & E-Commerce Platforms"],
-            monogram: "CD",
-            bio: [
-              "Chirag is the CTO of Variance Infotech and has wide knowledge and experience of 20+ years in website development, support and maintenance. His team has developed and is maintaining the website.",
-            ],
-          },
-        ]),
       },
       { anchor: "team-ecosystem" }
     ),
@@ -1784,9 +1643,6 @@ const nriReturningToIndia = {
       "nriFounderStory",
       "Founder Experience & Credentials",
       {
-        founderImage: img("/images/team/jigar-patel.jpg", "Mr. Jigar Patel, Founder and Principal Officer"),
-        founderName: "Mr. Jigar Patel",
-        founderRole: "Founder & Principal Officer",
         heading: "We Have Made This Journey Ourselves",
         paragraphs: [
           "Our founder, Jigar Patel, lived and worked in the United States for 9 years before moving back to India with his family.",
@@ -2143,7 +1999,6 @@ const nriReturningToIndia = {
       "One Trusted Adviser (Why Choose)",
       {
         heading: "One Trusted Adviser for Both Sides of Your Life",
-        founderImage: img("/images/team/jigar-patel.jpg", "Mr. Jigar Patel, Founder"),
         leadCardNum: "01",
         leadCardTitle: "We have lived it.",
         leadCardText: "Our founder returned from the USA himself.",
