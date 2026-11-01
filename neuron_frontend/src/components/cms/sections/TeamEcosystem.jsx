@@ -6,12 +6,10 @@ import { visibleItems, strings, hasImage } from "../primitives";
 
 const EASE = [0.22, 1, 0.36, 1];
 
-function MemberPhoto({ member, large }) {
+function MemberPhoto({ member }) {
   const [failed, setFailed] = useState(false);
   return (
-    <div
-      className={`relative shrink-0 rounded-full border border-[#54B848] p-1 ${large ? "h-24 w-24 sm:h-32 sm:w-32" : "h-20 w-20"}`}
-    >
+    <div className="relative h-20 w-20 shrink-0 rounded-full border border-[#54B848] p-1 sm:h-24 sm:w-24">
       <span aria-hidden="true" className="absolute right-1 top-0.5 z-10 h-2.5 w-2.5 rounded-full bg-[#54B848]" />
       <div className="h-full w-full overflow-hidden rounded-full bg-gradient-to-br from-[#15344F] via-[#1b4a6e] to-[#21649A]">
         {member.image && !failed ? (
@@ -23,7 +21,7 @@ function MemberPhoto({ member, large }) {
             onError={() => setFailed(true)}
           />
         ) : (
-          <span className={`flex h-full w-full items-center justify-center font-display tracking-wide text-white ${large ? "text-[2rem]" : "text-[1.4rem]"}`}>
+          <span className="flex h-full w-full items-center justify-center font-display text-[1.5rem] tracking-wide text-white sm:text-[1.75rem]">
             {member.monogram}
           </span>
         )}
@@ -32,60 +30,26 @@ function MemberPhoto({ member, large }) {
   );
 }
 
-const bioLength = (member) => member.bio.join(" ").length;
-
 /**
- * Bento layout on a 3-column grid, keeping the Home order: rows alternate between a pair
- * (one large card spanning two columns + one small card) and a trio of small cards. In each
- * pair the member with the longer bio gets the large card. Every row is filled completely.
+ * Zig-zag placement on a 2-column grid (lg+): every card spans two grid rows and each
+ * card starts one row below the previous one, alternating columns. The right column is
+ * therefore offset by roughly half a card, giving a staggered zig-zag in Home order.
  */
-function bentoLayout(members) {
-  const sized = [];
-  let index = 0;
-  let pairRow = true;
-  while (index < members.length) {
-    const left = members.length - index;
-    if (left === 1) {
-      sized.push({ member: members[index], size: "full" });
-      index += 1;
-    } else if (pairRow || left === 2 || left === 4) {
-      const [a, b] = [members[index], members[index + 1]];
-      const aLarge = bioLength(a) >= bioLength(b);
-      sized.push({ member: a, size: aLarge ? "large" : "small" }, { member: b, size: aLarge ? "small" : "large" });
-      index += 2;
-      pairRow = false;
-    } else {
-      for (const member of members.slice(index, index + 3)) sized.push({ member, size: "small" });
-      index += 3;
-      pairRow = true;
-    }
-  }
-  return sized;
-}
+const zigzagStyle = (idx) => ({
+  "--zz-col": String((idx % 2) + 1),
+  "--zz-row": `${idx + 1} / span 2`,
+});
 
-const SPAN = { small: "lg:col-span-1", large: "lg:col-span-2", full: "lg:col-span-3" };
-
-function MemberCard({ member, size }) {
-  const large = size !== "small";
+function MemberCard({ member }) {
   return (
-    <div
-      className={`flex h-full flex-col rounded-2xl border p-6 transition-colors duration-300 hover:border-[#54B848]/50 sm:p-8 ${
-        large
-          ? "border-[#54B848]/25 bg-gradient-to-br from-[#1b4a6e]/60 via-[#15344F]/70 to-[#0B1E30]/90"
-          : "border-white/10 bg-gradient-to-br from-[#15344F]/70 to-[#0B1E30]/80"
-      }`}
-    >
-      <div className={`flex items-center ${large ? "gap-6" : "gap-4"}`}>
-        <MemberPhoto member={member} large={large} />
+    <div className="flex h-full flex-col rounded-2xl border border-white/10 bg-gradient-to-br from-[#15344F]/70 to-[#0B1E30]/80 p-6 transition-colors duration-300 hover:border-[#54B848]/50 sm:p-7">
+      <div className="flex items-center gap-5">
+        <MemberPhoto member={member} />
         <div className="min-w-0">
           {member.role && (
             <p className="text-[0.6875rem] font-bold uppercase leading-snug tracking-[0.16em] text-[#8FCB86]">{member.role}</p>
           )}
-          <h3
-            className={`mt-1.5 font-display font-medium leading-tight text-white ${
-              large ? "text-[1.65rem] sm:text-[2rem]" : "text-[1.4rem]"
-            }`}
-          >
+          <h3 className="mt-1.5 font-display text-[1.4rem] font-medium leading-tight text-white sm:text-[1.6rem]">
             {member.name}
           </h3>
         </div>
@@ -102,11 +66,7 @@ function MemberCard({ member, size }) {
       )}
 
       {member.bio.length > 0 && (
-        <div
-          className={`mt-5 border-t border-white/10 pt-5 text-sm leading-[1.8] text-white/75 ${
-            large ? "sm:text-[0.9375rem] lg:columns-2 lg:gap-10 [&>p]:break-inside-avoid [&>p+p]:mt-3.5" : "space-y-3.5"
-          }`}
-        >
+        <div className="mt-5 space-y-3.5 border-t border-white/10 pt-5 text-sm leading-[1.8] text-white/75">
           {member.bio.map((para, pIdx) => (
             <p key={pIdx}>{para}</p>
           ))}
@@ -143,7 +103,6 @@ export default function TeamEcosystem({ id, content, design, root }) {
         })),
     [homeTeam]
   );
-  const cards = useMemo(() => bentoLayout(members), [members]);
 
   return (
     <section
@@ -180,17 +139,21 @@ export default function TeamEcosystem({ id, content, design, root }) {
           )}
         </div>
 
-        <ul id="team-members-panel" className="mt-12 grid grid-cols-1 gap-6 lg:mt-14 lg:grid-cols-3">
-          {cards.map(({ member, size }, idx) => (
+        <ul
+          id="team-members-panel"
+          className="mt-12 grid grid-cols-1 gap-6 lg:mt-14 lg:grid-cols-2 lg:gap-x-8 lg:gap-y-6"
+        >
+          {members.map((member, idx) => (
             <motion.li
               key={member.id}
-              initial={reduce ? false : { opacity: 0, y: 28 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={reduce ? false : { opacity: 0, x: idx % 2 ? 28 : -28 }}
+              whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.5, delay: (idx % 3) * 0.08, ease: EASE }}
-              className={SPAN[size]}
+              transition={{ duration: 0.5, delay: (idx % 2) * 0.08, ease: EASE }}
+              style={zigzagStyle(idx)}
+              className="lg:[grid-column:var(--zz-col)] lg:[grid-row:var(--zz-row)]"
             >
-              <MemberCard member={member} size={size} />
+              <MemberCard member={member} />
             </motion.li>
           ))}
         </ul>
